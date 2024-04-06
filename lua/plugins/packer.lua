@@ -1,8 +1,13 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
+  use "wakatime/vim-wakatime"
+  use 'prettier/vim-prettier'
+  use { 'kaicataldo/material.vim', { branch = 'main' } }
+
   use 'preservim/nerdtree'
   use { 'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons' }
+  use 'posva/vim-vue'
 
   use 'nvim-lua/plenary.nvim' -- Common utilities
   use 'onsails/lspkind-nvim'  -- vscode-like pictograms
@@ -24,6 +29,9 @@ return require('packer').startup(function(use)
     }
   }
 
+  -- Copilot
+  use 'github/copilot.vim'
+
   -- Packer
   use 'wbthomason/packer.nvim'
 
@@ -38,6 +46,14 @@ return require('packer').startup(function(use)
   }
 
   use { 'catppuccin/nvim', as = 'catppuccin' }
+
+  -- Productivity
+
+
+  use 'honza/vim-snippets'               -- Exemplo do plugin vim-snippets
+  use { 'rafamadriz/friendly-snippets' } -- Exemplo de plugin
+
+  --use {'akinsho/bufferline.nvim', tag = '*'}
 
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.4'
@@ -57,6 +73,28 @@ return require('packer').startup(function(use)
   use 'mfussenegger/nvim-dap'
   use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
 
+
+  -- Language Servers
+
+  use 'mfussenegger/nvim-jdtls'
+
+  -- use {'neoclide/coc.nvim', branch = 'release'}
+
+
+
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v3.x',
+    requires = {
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
+      { 'neovim/nvim-lspconfig' },
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'L3MON4D3/LuaSnip' },
+    }
+  }
+
   use {
     'williamboman/nvim-lsp-installer',
   }
@@ -69,6 +107,17 @@ return require('packer').startup(function(use)
   -- Language Parser
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
+
+  use { 'jose-elias-alvarez/null-ls.nvim' }
+
   -- Git Tools
   use 'tpope/vim-fugitive'
+
+
+  -- Laguages Plugins
+
+  -- Golang Setup
+
+  use 'ray-x/go.nvim'
+  use 'ray-x/guihua.lua' -- recommended if need floating window support
 end)
