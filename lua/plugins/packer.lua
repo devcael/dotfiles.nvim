@@ -2,6 +2,7 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
   use "wakatime/vim-wakatime"
+
   use 'prettier/vim-prettier'
   use { 'kaicataldo/material.vim', { branch = 'main' } }
 

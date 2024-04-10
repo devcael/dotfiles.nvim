@@ -1,5 +1,6 @@
 require("nvim-lsp-installer").setup({
   automatic_installation = true,
+  log_level = "error",
   ui = {
     icons = {
       server_installed = "✓",
@@ -24,6 +25,7 @@ require('mason-lspconfig').setup({
     "html",
     "jsonls",
     "tsserver",
+    'rust_analyzer'
   },
   handlers = {
     lsp_zero.default_setup,

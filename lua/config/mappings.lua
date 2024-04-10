@@ -46,6 +46,8 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 
 -- Nerdtree
 vim.keymap.set('n', '<C-e>', "<cmd>:NERDTreeToggle<cr>", { silent = true });
+vim.keymap.set('n', '<leader>nf', "<cmd>:NERDTreeFind<cr>", { silent = true });
+vim.keymap.set('n', '<leader>e', "<cmd>:NERDTreeFocus<cr>", { silent = true });
 
 
 -- Lsp
@@ -76,3 +78,24 @@ lsp_zero.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+-- Harpoon
+local h_mark = require("harpoon.mark")
+local h_ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<leader>a", h_mark.add_file)
+vim.keymap.set("n", "<leader>hh", h_ui.toggle_quick_menu)
+
+vim.keymap.set("n", "<C-b>", h_ui.nav_next, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>1", function()
+  h_ui.nav_file(1)
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>2", function()
+  h_ui.nav_file(2)
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>3", function()
+  h_ui.nav_file(3)
+end, { noremap = true, silent = true })
