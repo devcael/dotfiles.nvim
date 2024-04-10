@@ -3,6 +3,9 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use "wakatime/vim-wakatime"
 
+  -- Lua "https://github.com/folke/neoconf.nvim"
+  use "folke/neoconf.nvim"
+
   use 'prettier/vim-prettier'
   use { 'kaicataldo/material.vim', { branch = 'main' } }
 
@@ -78,10 +81,6 @@ return require('packer').startup(function(use)
   -- Language Servers
 
   use 'mfussenegger/nvim-jdtls'
-
-  -- use {'neoclide/coc.nvim', branch = 'release'}
-
-
 
   use {
     'VonHeikemen/lsp-zero.nvim',

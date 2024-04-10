@@ -1,3 +1,20 @@
+require("neoconf").setup({})
+
+local lsp_zero = require('lsp-zero')
+
+local on_attach = require("config.lsp_config").on_attach
+local capabilities = require("config.lsp_config").capabilities
+local util = require "lspconfig/util"
+local lspconfig = require("lspconfig")
+
+vim.diagnostic.config({
+  underline = false,
+  virtual_text = false,
+  virtual_lines = false,
+  signs = false,
+  update_in_insert = false,
+})
+
 require("nvim-lsp-installer").setup({
   automatic_installation = true,
   log_level = "error",
@@ -9,8 +26,6 @@ require("nvim-lsp-installer").setup({
     }
   }
 })
-
-local lsp_zero = require('lsp-zero')
 
 require('mason').setup({
 })
@@ -25,6 +40,7 @@ require('mason-lspconfig').setup({
     "html",
     "jsonls",
     "tsserver",
+    'volar',
     'rust_analyzer'
   },
   handlers = {
@@ -37,44 +53,40 @@ require('mason-lspconfig').setup({
   }
 })
 
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require 'luasnip'.lsp_expand(args.body)
+require("mason-lspconfig").setup_handlers({
+  function (server_name)
+    local server_config = {}
+    if require("neoconf").get(server_name .. ".disable") then
+      return
     end
-  },
-  sources = {
-    { name = 'path' },
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
-    { name = 'luasnip' },
-  },
-  window = {
-    completion = cmp.config.window.bordered({
-      border = 'rounded'
-    })
-  },
-  formatting = lsp_zero.cmp_format(),
-  mapping = cmp.mapping.preset.insert({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<enter>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  }),
+    if server_name == 'volar' then
+      server_config.filetypes = { "vue", "javascript", "typescript" }
+    end
+    lspconfig[server_name].setup(server_config)
+  end
 })
 
-vim.diagnostic.config({
-  underline = false,
-  virtual_text = false,
-  virtual_lines = false,
-  signs = false,
-  update_in_insert = false,
+lspconfig.volar.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "vue", "javascript", "typescript" },
+ })
+
+lspconfig.rust_analyzer.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {"rust"},
+  root_dir = util.root_pattern("Cargo.toml"),
+  settings = {
+    ['rust-analyzer'] = {
+      cargo = {
+        allFeatures = true,
+      }
+    }
+  }
 })
 
-require('lspconfig').clangd.setup({
+lspconfig.clangd.setup({
   cmd = {
     "clangd"
   },
@@ -89,12 +101,11 @@ require('lspconfig').clangd.setup({
     },
     offsetEncoding = { 'utf-8', 'utf-16' },
   },
-
 })
 
-require 'lspconfig'.lua_ls.setup {}
+lspconfig.lua_ls.setup {}
 
-require('lspconfig').pyright.setup {
+lspconfig.pyright.setup {
   settings = {
     python = {
       analysis = {
