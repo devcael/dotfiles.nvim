@@ -3,6 +3,9 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use "wakatime/vim-wakatime"
 
+  -- Coc
+  use {'neoclide/coc.nvim', branch = 'release'}
+
   -- Lua "https://github.com/folke/neoconf.nvim"
   use "folke/neoconf.nvim"
 

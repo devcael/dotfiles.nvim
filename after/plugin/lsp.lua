@@ -1,5 +1,3 @@
-require("neoconf").setup({})
-
 local lsp_zero = require('lsp-zero')
 
 local on_attach = require("config.lsp_config").on_attach
@@ -40,7 +38,6 @@ require('mason-lspconfig').setup({
     "html",
     "jsonls",
     "tsserver",
-    'volar',
     'rust_analyzer'
   },
   handlers = {
@@ -53,24 +50,18 @@ require('mason-lspconfig').setup({
   }
 })
 
-require("mason-lspconfig").setup_handlers({
-  function (server_name)
-    local server_config = {}
-    if require("neoconf").get(server_name .. ".disable") then
-      return
-    end
-    if server_name == 'volar' then
-      server_config.filetypes = { "vue", "javascript", "typescript" }
-    end
-    lspconfig[server_name].setup(server_config)
-  end
-})
-
-lspconfig.volar.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "vue", "javascript", "typescript" },
- })
+--require("mason-lspconfig").setup_handlers({
+--  function (server_name)
+--    local server_config = {}
+--    if require("neoconf").get(server_name .. ".disable") then
+--      return
+--    end
+--    if server_name == 'volar' then
+--      server_config.filetypes = { "vue", "javascript", "typescript" }
+--    end
+--    lspconfig[server_name].setup(server_config)
+--  end
+--})
 
 lspconfig.rust_analyzer.setup({
   on_attach = on_attach,
