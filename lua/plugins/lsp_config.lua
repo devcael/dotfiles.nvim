@@ -20,8 +20,19 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
+M.lsp_format_on_save = function(bufnr)
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = augroup,
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format()
+    end,
+  })
+end
+
 M.on_attach = function(cliente, bufnr)
-  lsp_format_on_save(bufnr);
+  M.lsp_format_on_save(bufnr);
   local opts = { buffer = bufnr, remap = false }
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)

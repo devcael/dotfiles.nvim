@@ -11,5 +11,9 @@ vim.o.shiftwidth = 2
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.cmd("set termguicolors")
+vim.g.mapleader = " "
 
 vim.opt.clipboard:append("unnamedplus")
+
+-- Appearence
+vim.cmd.colorscheme("kanagawa")

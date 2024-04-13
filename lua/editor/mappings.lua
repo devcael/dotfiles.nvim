@@ -30,46 +30,8 @@ vim.api.nvim_set_keymap('n', '<C-u><C-t>', [[:UndotreeToggle<CR>]], { noremap = 
 
 vim.api.nvim_set_keymap('x', '<leader>p', "\"_dP", { noremap = true, silent = true })
 
--- Telescope
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-p>', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-vim.keymap.set('n', '<C-g>', builtin.git_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>ps', function()
-  builtin.grep_string({ search = vim.fn.input("Grep > ") });
-end)
-
--- undotree
-vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
-
--- Nerdtree
-vim.keymap.set('n', '<C-e>', "<cmd>:NERDTreeToggle<cr>", { silent = true });
-vim.keymap.set('n', '<leader>nf', "<cmd>:NERDTreeFind<cr>", { silent = true });
-vim.keymap.set('n', '<leader>e', "<cmd>:NERDTreeFocus<cr>", { silent = true });
 
 
--- Lsp
 
 
--- Harpoon
-local h_mark = require("harpoon.mark")
-local h_ui = require("harpoon.ui")
 
-vim.keymap.set("n", "<leader>a", h_mark.add_file)
-vim.keymap.set("n", "<leader>hh", h_ui.toggle_quick_menu)
-
-vim.keymap.set("n", "<C-b>", h_ui.nav_next, { noremap = true, silent = true })
-
-vim.keymap.set("n", "<leader>1", function()
-  h_ui.nav_file(1)
-end, { noremap = true, silent = true })
-
-vim.keymap.set("n", "<leader>2", function()
-  h_ui.nav_file(2)
-end, { noremap = true, silent = true })
-
-vim.keymap.set("n", "<leader>3", function()
-  h_ui.nav_file(3)
-end, { noremap = true, silent = true })
