@@ -34,4 +34,6 @@ return require('packer').startup(function(use)
   use 'preservim/nerdtree'
   -- Buffers navigation
   use 'ThePrimeagen/harpoon'
+  -- Git
+  use 'tpope/vim-fugitive'
 end)
