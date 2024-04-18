@@ -36,4 +36,6 @@ return require('packer').startup(function(use)
   use 'ThePrimeagen/harpoon'
   -- Git
   use 'tpope/vim-fugitive'
+  -- Term
+  use "akinsho/toggleterm.nvim"
 end)
