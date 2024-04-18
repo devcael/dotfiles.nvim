@@ -32,7 +32,6 @@ M.lsp_format_on_save = function(bufnr)
 end
 
 M.on_attach = function(cliente, bufnr)
-  M.lsp_format_on_save(bufnr);
   local opts = { buffer = bufnr, remap = false }
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)

@@ -1,9 +1,10 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require 'lspconfig'
 local util = require 'lspconfig.util'
+local lsp_config = require 'plugins.lsp_config'
 
 require 'lspconfig'.tsserver.setup({
-  -- on_attach = on_attach,
+  on_attach = lsp_config.on_attach,
   capabilities = capabilities,
   root_dir = vim.loop.cwd,
   init_options = {
@@ -28,7 +29,7 @@ require 'lspconfig'.tsserver.setup({
 local tslib_path = "/home/devcael/.local/share/nvm/v21.7.2/lib/node_modules/typescript/lib"
 
 require "lspconfig".volar.setup({
-  -- on_attach = on_attach,
+  on_attach = lsp_config.on_attach,
   capabilities = capabilities,
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
   root_dir = util.root_pattern 'package.json',

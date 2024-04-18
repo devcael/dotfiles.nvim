@@ -26,12 +26,15 @@ vim.api.nvim_set_keymap('n', '<M-Right>', [[:vertical resize +5<CR>]], { noremap
 vim.api.nvim_set_keymap('n', '<leader>/', [[:vsplit<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>?', [[:split<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<C-u><C-t>', [[:UndotreeToggle<CR>]], { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap('x', '<leader>p', "\"_dP", { noremap = true, silent = true })
 
+-- Format Buffer Native Lsp
+vim.keymap.set('n', '<C-A-L>', vim.lsp.buf.format, { noremap = true, silent = true })
 
-
-
-
-
+vim.api.nvim_create_user_command(
+  "Format",
+  function()
+    vim.lsp.buf.format()
+  end,
+  {}
+)
