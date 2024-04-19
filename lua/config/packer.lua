@@ -43,7 +43,11 @@ return require('packer').startup(function(use)
   -- File explorer
   use 'preservim/nerdtree'
   -- Buffers navigation
-  use 'ThePrimeagen/harpoon'
+  use {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    requires = { { "nvim-lua/plenary.nvim" } }
+  }
   -- Git
   use 'tpope/vim-fugitive'
   -- Term
