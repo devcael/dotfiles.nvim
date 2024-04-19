@@ -1,13 +1,24 @@
 local status_ok, toggleterm = pcall(require, "toggleterm")
-local utils = require"resources.utils"
+local utils = require "resources.utils"
 
 if not status_ok then
   return
 end
 
+local shell = function()
+  local os = utils.os()
+  if os.IS_WINDOWS then
+    return 'powershell'
+  elseif os.IS_LINUX then
+    return 'fish'
+  else
+    error("Shell não identificado no sistema operacional")
+  end
+end
+
 toggleterm.setup({
   size = 20,
-  open_mapping = [[<A-F12>]],
+  open_mapping = [[<c-\>]],
   hide_numbers = true,
   shade_filetypes = {},
   shade_terminals = true,
@@ -27,18 +38,6 @@ toggleterm.setup({
     },
   },
 })
-
-local shell = function()
-  local os = utils.os()
-  if os.IS_WINDOWS then
-    return 'powershell'
-  elseif os.IS_LINUX then
-    return 'fish'
-  else
-    error("Shell não identificado no sistema operacional")
-  end
-end
-
 
 function _G.set_terminal_keymaps()
   local opts = { noremap = true }
