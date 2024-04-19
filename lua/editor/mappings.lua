@@ -21,7 +21,6 @@ vim.api.nvim_set_keymap('n', '<M-Down>', [[:resize +5<CR>]], { noremap = true, s
 vim.api.nvim_set_keymap('n', '<M-Left>', [[:vertical resize -5<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<M-Right>', [[:vertical resize +5<CR>]], { noremap = true, silent = true })
 
-
 -- Mapeamento de SplitVertical
 vim.api.nvim_set_keymap('n', '<leader>/', [[:vsplit<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>?', [[:split<CR>]], { noremap = true, silent = true })

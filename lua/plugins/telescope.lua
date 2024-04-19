@@ -9,3 +9,15 @@ vim.keymap.set('n', '<leader>ps', function()
   builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
 
+-- Define a função para abrir o prompt "Grep >"
+-- function OpenGrepPrompt()
+--     vim.cmd('command! -nargs=* Grep execute "grep" <q-args>')
+--         vim.fn.inputsave()
+--             local cmd = vim.fn.input('Grep > ')
+--                 vim.fn.inputrestore()
+--                     vim.cmd('execute "Grep " . fnameescape(' .. cmd .. ')')
+--                     end
+--
+--                     -- Mapeamento para abrir o prompt "Grep >" no modo normal
+--                     vim.api.nvim_set_keymap('n', '<leader>g', ':lua OpenGrepPrompt()<CR>', {noremap = true, silent = true})
+--

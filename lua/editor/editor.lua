@@ -13,7 +13,7 @@ vim.wo.relativenumber = true
 vim.cmd("set termguicolors")
 vim.g.mapleader = " "
 
-vim.opt.clipboard:append("unnamedplus")
+vim.opt.clipboard:append("unnamed")
 
 -- Appearence
-vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("rose-pine-main")
