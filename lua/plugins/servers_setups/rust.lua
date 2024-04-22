@@ -23,3 +23,10 @@ local opts = {
 }
 
 require('rust-tools').setup(opts);
+
+
+-- Articles:
+-- https://github.com/simrat39/rust-tools.nvim/wiki/Debugging
+-- https://github.com/LunarVim/LunarVim/issues/4074
+-- https://github.com/BrendanNolan/nvim/blob/master/after/plugin/dap.lua
+-- https://www.reddit.com/r/neovim/comments/108jran/rusttools_attempt_to_start_deubgging_raises/
