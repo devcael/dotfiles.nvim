@@ -16,4 +16,4 @@ vim.g.mapleader = " "
 vim.opt.clipboard:append("unnamed")
 
 -- Appearence
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("ghdark")

@@ -24,8 +24,14 @@ require('mason-tool-installer').setup {
     'misspell',
     'shellcheck',
     'vint',
+    'typescript-language-server',
+    'lua-language-server',
+    'vue-language-server',
+    'css-lsp',
+    'html-lsp',
+    'tailwindcss-language-server'
   },
   run_on_start = true,
-  start_delay = 3000, -- 3 second delay
-  debounce_hours = 5, -- at least 5 hours between attempts to install/update
+  start_delay = 1000, -- 3 second delay
+  debounce_hours = 1, -- at least 5 hours between attempts to install/update
 }
