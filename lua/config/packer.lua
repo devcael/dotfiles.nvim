@@ -7,8 +7,16 @@ return require('packer').startup(function(use)
   use 'ghifarit53/tokyonight-vim'
   use { "catppuccin/nvim", as = "catppuccin" }
 
+  -- Rust Format
+  use 'rust-lang/rust.vim'
+  -- Todo: Maybe Add Rustacean https://github.com/mrcjkb/rustaceanvim/tree/master?tab=readme-ov-file#books-usage--features
+
+  use 'simrat39/rust-tools.nvim'
+
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+  -- Tool to auto install mason lsp
+  use 'WhoIsSethDaniel/mason-tool-installer.nvim'
   -- Lsp built in
   use 'neovim/nvim-lspconfig'
   -- Debug
