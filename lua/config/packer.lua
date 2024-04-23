@@ -1,5 +1,6 @@
 return require('packer').startup(function(use)
   -- Themes
+  use 'AlexvZyl/nordic.nvim'
   use { "rose-pine/neovim", as = "rose-pine" }
   use "rebelot/kanagawa.nvim"
   use 'jdkanani/vim-material-theme'
