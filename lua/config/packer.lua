@@ -1,6 +1,6 @@
 return require('packer').startup(function(use)
   -- Themes
-  use 'nyoom-engineering/nyoom.nvim'
+  use "nyoom-engineering/oxocarbon.nvim"
   use 'wojciechkepka/vim-github-dark'
   use 'xStormyy/bearded-theme.nvim'
   use { "rose-pine/neovim", as = "rose-pine" }
