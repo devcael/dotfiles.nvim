@@ -1,4 +1,5 @@
 vim.cmd('syntax enable')
+
 vim.cmd('filetype plugin indent on')
 vim.o.smartcase = true
 vim.o.hidden = true
@@ -16,7 +17,6 @@ vim.g.mapleader = " "
 vim.opt.clipboard:append("unnamed")
 
 -- Appearence
-vim.cmd [[ set background=dark ]]
 vim.cmd [[ colorscheme nordic ]]
 
 local palette = require 'nordic.colors'
@@ -33,3 +33,4 @@ require 'nordic'.setup {
   }
 }
 
+require("resources.theme_utils").set_background_transparent();

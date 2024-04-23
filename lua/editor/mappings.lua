@@ -37,3 +37,10 @@ vim.api.nvim_create_user_command(
   end,
   {}
 )
+
+-- Set Background Transparent
+vim.api.nvim_create_user_command(
+  "Transparent",
+  require("resources.theme_utils").set_background_transparent,
+  {}
+)
