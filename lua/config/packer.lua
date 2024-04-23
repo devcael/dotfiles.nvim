@@ -1,6 +1,9 @@
 return require('packer').startup(function(use)
   -- Themes
   use 'AlexvZyl/nordic.nvim'
+  use "nyoom-engineering/oxocarbon.nvim"
+  use 'wojciechkepka/vim-github-dark'
+  use 'xStormyy/bearded-theme.nvim'
   use { "rose-pine/neovim", as = "rose-pine" }
   use "rebelot/kanagawa.nvim"
   use 'jdkanani/vim-material-theme'
@@ -50,6 +53,16 @@ return require('packer').startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
   -- File explorer
+  use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
+  }
   use 'preservim/nerdtree'
   -- Buffers navigation
   use {
