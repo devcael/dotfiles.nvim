@@ -20,7 +20,11 @@ require('mason-tool-installer').setup {
     'vue-language-server',
     'css-lsp',
     'html-lsp',
-    'tailwindcss-language-server'
+    'tailwindcss-language-server',
+    'java-test',
+    "java-debug-adapter",
+    "java-language-server",
+    "jdtls"
   },
   run_on_start = true,
   start_delay = 1000, -- 3 second delay

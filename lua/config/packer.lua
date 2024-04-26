@@ -11,6 +11,9 @@ return require('packer').startup(function(use)
   use 'ghifarit53/tokyonight-vim'
   use { "catppuccin/nvim", as = "catppuccin" }
 
+  -- Java Setup
+  use 'mfussenegger/nvim-jdtls'
+
   -- Rust Format
   use 'rust-lang/rust.vim'
   -- Todo: Maybe Add Rustacean https://github.com/mrcjkb/rustaceanvim/tree/master?tab=readme-ov-file#books-usage--features
