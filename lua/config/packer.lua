@@ -19,8 +19,6 @@ return require('packer').startup(function(use)
 
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-  -- Tool to auto install mason lsp
-  use 'WhoIsSethDaniel/mason-tool-installer.nvim'
   -- Lsp built in
   use 'neovim/nvim-lspconfig'
   -- Debug
