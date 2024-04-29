@@ -1,5 +1,3 @@
-local M = {}
-
 vim.g.mapleader = " " -- LeaderKey
 
 -- Mapeamento para selecionar a palavra atual

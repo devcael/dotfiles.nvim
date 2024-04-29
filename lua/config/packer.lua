@@ -30,6 +30,8 @@ return require('packer').startup(function(use)
 
   use 'simrat39/rust-tools.nvim'
 
+  use 'redhat-developer/vscode-java'
+
   -- Golang dap
   use "leoluz/nvim-dap-go"
 

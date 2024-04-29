@@ -21,3 +21,5 @@ require("mason-lspconfig").setup {
     "cssls"
   },
 }
+
+-- Needs java-debug-adapter, java-test, prettier
