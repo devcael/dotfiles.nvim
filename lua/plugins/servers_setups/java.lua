@@ -15,15 +15,11 @@ local root_files = {
 }
 
 local features = {
-  -- change this to `true` to enable codelens
   codelens = true,
-
-  -- Alterar para `true` se o nvim-dap estiver instalado junto ao
-  -- `java-test` and `java-debug-adapter`
   debugger = true,
 }
 
-local get_jdtls_paths  = function()
+local function get_jdtls_paths()
   if cache_vars.paths then
     return cache_vars.paths
   end
@@ -35,8 +31,6 @@ local get_jdtls_paths  = function()
   local jdtls_install = require('mason-registry')
       .get_package('jdtls')
       :get_install_path()
-
-  print("Jdtl Path: " .. jdtls_install)
 
   path.java_agent = jdtls_install .. '/lombok.jar'
   path.launcher_jar = vim.fn.glob(jdtls_install .. '/plugins/org.eclipse.equinox.launcher_*.jar')
@@ -129,8 +123,7 @@ local function jdtls_on_attach(client, bufnr)
   vim.keymap.set('x', 'crm', "<esc><Cmd>lua require('jdtls').extract_method(true)<cr>", opts)
 end
 
-
-local function jdtls_setup(event)
+function jdtls_setup(event)
   local jdtls = require('jdtls')
 
   local path = get_jdtls_paths()

@@ -1,5 +1,7 @@
-local status, autotag = pcall(require, "nvim-ts-autotag")
+local status, autopairs = pcall(require, "nvim-autopairs")
 if (not status) then return end
 
-autotag.setup({})
+autopairs.setup({
+  disable_filetype = { "TelescopePrompt", "vim" },
+})
 

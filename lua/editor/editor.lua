@@ -17,20 +17,7 @@ vim.g.mapleader = " "
 vim.opt.clipboard:append("unnamed")
 
 -- Appearence
-vim.cmd [[ colorscheme nordic ]]
+vim.opt.termguicolors = true
+vim.cmd [[ colorscheme min-theme ]]
 
-local palette = require 'nordic.colors'
-require 'nordic'.setup {
-  override = {
-    TelescopePromptTitle = {
-      fg = palette.red.bright,
-      bg = palette.green.base,
-      italic = true,
-      underline = true,
-      sp = palette.yellow.dim,
-      undercurl = false
-    }
-  }
-}
-
-require("resources.theme_utils").set_background_transparent();
+require("resources.theme_utils").set_background_transparent()

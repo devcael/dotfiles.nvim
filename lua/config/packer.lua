@@ -1,5 +1,12 @@
 return require('packer').startup(function(use)
+  -- Airline
+  use {
+    'nvim-lualine/lualine.nvim'
+  }
+
   -- Themes
+  use "nvim-tree/nvim-web-devicons"
+  use 'datsfilipe/min-theme.nvim'
   use 'AlexvZyl/nordic.nvim'
   use "nyoom-engineering/oxocarbon.nvim"
   use 'wojciechkepka/vim-github-dark'
@@ -10,20 +17,24 @@ return require('packer').startup(function(use)
   use 'foxoman/vim-helix'
   use 'ghifarit53/tokyonight-vim'
   use { "catppuccin/nvim", as = "catppuccin" }
-
   -- Java Setup
   use 'mfussenegger/nvim-jdtls'
-
+  -- Ts Formatter
+  use('MunifTanjim/prettier.nvim')
+  use {
+      'nvim-lualine/lualine.nvim'
+  }
   -- Rust Format
   use 'rust-lang/rust.vim'
   -- Todo: Maybe Add Rustacean https://github.com/mrcjkb/rustaceanvim/tree/master?tab=readme-ov-file#books-usage--features
 
   use 'simrat39/rust-tools.nvim'
 
+  -- Golang dap
+  use "leoluz/nvim-dap-go"
+
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-  -- Tool to auto install mason lsp
-  use 'WhoIsSethDaniel/mason-tool-installer.nvim'
   -- Lsp built in
   use 'neovim/nvim-lspconfig'
   -- Debug
@@ -37,6 +48,7 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
   -- Snippets for
+  use('jose-elias-alvarez/null-ls.nvim')
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
   -- Post-install/update hook with neovim command
