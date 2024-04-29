@@ -1,3 +1,4 @@
+
 local key_map = function(mode, key, result)
   vim.api.nvim_set_keymap(
     mode,
@@ -14,6 +15,7 @@ key_map('n', '<leader>bl', ':lua require"dap".set_breakpoint(nil, nil, vim.fn.in
 key_map('n', '<leader>dr', ':lua require"dap".repl.open()<CR>')
 
 
+-- Dap Ui
 function show_dap_centered_scopes()
   local widgets = require'dap.ui.widgets'
   widgets.centered_float(widgets.scopes)
@@ -46,3 +48,5 @@ function attach_to_debug()
 end 
 
 key_map('n', '<leader>da', ':lua attach_to_debug()<CR>')
+
+

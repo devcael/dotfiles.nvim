@@ -21,9 +21,6 @@ return require('packer').startup(function(use)
   use 'mfussenegger/nvim-jdtls'
   -- Ts Formatter
   use('MunifTanjim/prettier.nvim')
-  use {
-      'nvim-lualine/lualine.nvim'
-  }
   -- Rust Format
   use 'rust-lang/rust.vim'
   -- Todo: Maybe Add Rustacean https://github.com/mrcjkb/rustaceanvim/tree/master?tab=readme-ov-file#books-usage--features
@@ -42,6 +39,7 @@ return require('packer').startup(function(use)
   -- Debug
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/cmp-dap'
+  use 'nvim-neotest/nvim-nio'
   use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
   -- Cmp - Code Completion
   use 'hrsh7th/cmp-nvim-lsp'
