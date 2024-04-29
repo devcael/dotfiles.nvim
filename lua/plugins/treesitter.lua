@@ -1,8 +1,11 @@
 require 'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+  ensure_installed = { "c" },
   sync_install = false,
   auto_install = true,
+  autotag = {
+    enable = true
+  },
   highlight = {
-    enable = false,
+    enable = true,
   },
 }
