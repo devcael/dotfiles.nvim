@@ -9,8 +9,8 @@ local key_map = function(mode, key, result)
 end
 
 -- Setup debug
-key_map('n', '<leader>b', ':lua require"dap".toggle_breakpoint()<CR>')
-key_map('n', '<leader>B', ':lua require"dap".set_breakpoint(vim.fn.input("Condition: "))<CR>')
+key_map('n', '<F8>', ':lua require"dap".toggle_breakpoint()<CR>')
+key_map('n', '<leader>bc', ':lua require"dap".set_breakpoint(vim.fn.input("Condition: "))<CR>')
 key_map('n', '<leader>bl', ':lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log: "))<CR>')
 key_map('n', '<leader>dr', ':lua require"dap".repl.open()<CR>')
 
@@ -25,7 +25,7 @@ key_map('n', 'gs', ':lua show_dap_centered_scopes()<CR>')
 
 -- Move in debug
 key_map('n', '<F5>', ':lua require"dap".continue()<CR>')
-key_map('n', '<F8>', ':lua require"dap".step_over()<CR>')
+key_map('n', '<F6>', ':lua require"dap".step_over()<CR>')
 key_map('n', '<F7>', ':lua require"dap".step_into()<CR>')
 key_map('n', '<S-F8>', ':lua require"dap".step_out()<CR>')
 

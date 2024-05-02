@@ -1,3 +1,5 @@
+local lsp_config = require("plugins.lsp_config") 
+
 local jdk17_path = function()
 	return "/home/devcael/.sdkman/candidates/java/17.0.10-oracle/bin/java"
 end
@@ -103,6 +105,8 @@ local function jdtls_on_attach(client, bufnr)
 	-- https://github.com/mfussenegger/nvim-jdtls#usage
 
 	local opts = { buffer = bufnr }
+
+  lsp_config.on_attach(client, bufnr)
 	vim.keyset("n", "<A-o>", "<cmd>lua require('jdtls').organize_imports()<cr>", opts)
 	vim.keyset("n", "crv", "<cmd>lua require('jdtls').extract_variable()<cr>", opts)
 	vim.keyset("x", "crv", "<esc><cmd>lua require('jdtls').extract_variable(true)<cr>", opts)
