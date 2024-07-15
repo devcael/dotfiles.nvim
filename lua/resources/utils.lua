@@ -89,4 +89,8 @@ function M.get_current_full_method_name(delimiter)
   return full_class_name .. delimiter .. method_name
 end
 
+function M.get_home_path()
+  return os.getenv("HOME")
+end
+
 return M

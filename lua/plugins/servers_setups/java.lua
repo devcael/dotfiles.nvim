@@ -1,7 +1,8 @@
 local lsp_config = require("plugins.lsp_config") 
+local utils = require("resources.utils")
 
 local jdk17_path = function()
-  return "/home/micaelgoncalves/.sdkman/candidates/java/17.0.10-oracle/bin/java"
+  return utils.get_home_path() .. "/.sdkman/candidates/java/17.0.10-oracle/bin/java"
 end
 
 local java_cmds = vim.api.nvim_create_augroup("java_cmds", { clear = true })
