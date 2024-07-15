@@ -4,6 +4,8 @@ return require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim'
   }
 
+  use 'wakatime/vim-wakatime'
+
   -- Themes
   use "nvim-tree/nvim-web-devicons"
   use 'datsfilipe/min-theme.nvim'
