@@ -107,7 +107,7 @@ local function jdtls_on_attach(client, bufnr)
 	local opts = { buffer = bufnr }
 
   lsp_config.on_attach(client, bufnr)
-	vim.keyset("n", "<A-o>", "<cmd>lua require('jdtls').organize_imports()<cr>", opts)
+	vim.keyset("n", "<C-A-o>", "<cmd>lua require('jdtls').organize_imports()<cr>", opts)
 	vim.keyset("n", "crv", "<cmd>lua require('jdtls').extract_variable()<cr>", opts)
 	vim.keyset("x", "crv", "<esc><cmd>lua require('jdtls').extract_variable(true)<cr>", opts)
 	vim.keyset("n", "crc", "<cmd>lua require('jdtls').extract_constant()<cr>", opts)
