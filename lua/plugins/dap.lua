@@ -20,11 +20,10 @@ function show_dap_centered_scopes()
   local widgets = require'dap.ui.widgets'
   widgets.centered_float(widgets.scopes)
 end
-key_map('n', 'gs', ':lua show_dap_centered_scopes()<CR>')
-
+key_map('n', 'cs', ':lua show_dap_centered_scopes()<CR>')
 
 -- Move in debug
-key_map('n', '<F5>', ':lua require"dap".continue()<CR>')
+key_map('n', '<F9>', ':lua require"dap".continue()<CR>')
 key_map('n', '<F6>', ':lua require"dap".step_over()<CR>')
 key_map('n', '<F7>', ':lua require"dap".step_into()<CR>')
 key_map('n', '<S-F8>', ':lua require"dap".step_out()<CR>')
@@ -32,6 +31,7 @@ key_map('n', '<S-F8>', ':lua require"dap".step_out()<CR>')
 
 -- Java
 local dap = require('dap')
+
 dap.configurations.java = {
   {
     type = 'java';
