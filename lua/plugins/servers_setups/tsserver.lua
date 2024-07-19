@@ -1,6 +1,13 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local rs_util = require("resources.utils")
 local util = require 'lspconfig.util'
 local lsp_config = require 'plugins.lsp_config'
+
+local nd_version = "v22.0.0"
+local vuelib_path = rs_util.get_home_path() .. "/.local/share/nvm/" .. nd_version .. "/lib/node_modules/@vue/typescript-plugin"
+local tslib_path = rs_util.get_home_path() .. "/.local/share/nvm/" .. nd_version .. "/lib/node_modules/typescript/lib"
+
+print(vuelib_path)
 
 require 'lspconfig'.tsserver.setup({
   on_attach = lsp_config.on_attach,
@@ -11,7 +18,7 @@ require 'lspconfig'.tsserver.setup({
     plugins = {
       {
         name = "@vue/typescript-plugin",
-        location = "/home/devcael/.local/share/nvm/v21.7.2/lib/node_modules/@vue/typescript-plugin",
+        location = vuelib_path,
         languages = { "vue" }
       },
     },
@@ -25,7 +32,6 @@ require 'lspconfig'.tsserver.setup({
 
 
 
-local tslib_path = "/home/devcael/.local/share/nvm/v21.7.2/lib/node_modules/typescript/lib"
 
 require "lspconfig".volar.setup({
   on_attach = lsp_config.on_attach,
