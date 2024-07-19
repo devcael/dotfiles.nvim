@@ -9,6 +9,7 @@ local tslib_path = rs_util.get_home_path() .. "/.local/share/nvm/" .. nd_version
 
 print(vuelib_path)
 
+
 require 'lspconfig'.tsserver.setup({
   on_attach = lsp_config.on_attach,
   capabilities = capabilities,
