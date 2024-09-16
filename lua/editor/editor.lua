@@ -1,6 +1,7 @@
 vim.cmd('syntax enable')
 
 vim.cmd('filetype plugin indent on')
+vim.opt.wrap = false
 vim.o.smartcase = true
 vim.o.hidden = true
 vim.o.ignorecase = true

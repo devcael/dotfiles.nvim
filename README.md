@@ -9,3 +9,15 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 ```bash
 https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation
 ```
+
+3. Instalar pacotes npm para o tsserver
+```bash
+npm install -g @vue/typescript-plugin
+npm install -g typescript
+```
+
+4. Instalar copilot
+```bash
+git clone https://github.com/github/copilot.vim.git \
+  ~/.config/nvim/pack/github/start/copilot.vim
+```

@@ -10,7 +10,7 @@ local tslib_path = rs_util.get_home_path() .. "/.local/share/nvm/" .. nd_version
 print(vuelib_path)
 
 
-require 'lspconfig'.tsserver.setup({
+require 'lspconfig'.ts_ls.setup({
   on_attach = lsp_config.on_attach,
   capabilities = capabilities,
   root_dir = vim.loop.cwd,
