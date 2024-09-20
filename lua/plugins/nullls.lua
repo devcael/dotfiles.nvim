@@ -27,7 +27,8 @@ null.setup({
     null.builtins.completion.spell,
     null.builtins.formatting.gofmt,
     null.builtins.formatting.goimports,
-    -- null.builtins.formatting.ts_ls
+    -- Todo: Corrigir erro com o tsserver
+    -- null.builtins.formatting.tsserver
   },
 })
 
