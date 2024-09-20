@@ -14,7 +14,6 @@ require("mason-lspconfig").setup {
     'volar',
     'gopls',
     'volar',
-    'tsserver',
     "lua_ls",
     "rust_analyzer",
     "html",

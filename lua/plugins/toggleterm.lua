@@ -16,8 +16,6 @@ local shell = function()
   end
 end
 
-print("Shell: " .. shell())
-
 toggleterm.setup({
   size = 20,
   open_mapping = [[<c-\>]],

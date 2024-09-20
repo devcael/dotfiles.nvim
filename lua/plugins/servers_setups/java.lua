@@ -57,7 +57,7 @@ local function get_jdtls_paths()
 	local java_debug_path = require("mason-registry").get_package("java-debug-adapter"):get_install_path()
 
 
-print("Debug: " .. vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n")
+  -- print("Debug: " .. vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n")
 
 	local java_debug_bundle =
 		vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n")

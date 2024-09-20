@@ -7,9 +7,6 @@ local nd_version = "v22.0.0"
 local vuelib_path = rs_util.get_home_path() .. "/.local/share/nvm/" .. nd_version .. "/lib/node_modules/@vue/typescript-plugin"
 local tslib_path = rs_util.get_home_path() .. "/.local/share/nvm/" .. nd_version .. "/lib/node_modules/typescript/lib"
 
-print(vuelib_path)
-
-
 require 'lspconfig'.tsserver.setup({
   on_attach = lsp_config.on_attach,
   capabilities = capabilities,
