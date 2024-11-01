@@ -1,51 +1,53 @@
-vim.g.mapleader = " " -- LeaderKey
+local keymap = vim.keymap.set
+local createCommand = vim.api.nvim_create_user_command
+local silent = { silent = true }
 
 -- Mapeamento para selecionar a palavra atual
-vim.api.nvim_set_keymap("n", "<leader>w", "viw", { noremap = true })
+keymap("n", "<leader>w", "viw", silent)
 
 -- Mepeamento para copiar texto com Ctrl + Shift + C
-vim.api.nvim_set_keymap("n", "<C-S-c>", '"+y', { noremap = true })
-vim.api.nvim_set_keymap("v", "<C-S-c>", '"+y', { noremap = true })
+keymap("n", "<C-S-c>", '"+y', { noremap = true })
+keymap("v", "<C-S-c>", '"+y', { noremap = true })
 
 -- Mepeamento para colar do clipboard
-vim.api.nvim_set_keymap("n", "<C-v>", '"+p', { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-v>", "<C-r>+", { noremap = true })
+keymap("n", "<C-v>", '"+p', { noremap = true })
+keymap("i", "<C-v>", "<C-r>+", { noremap = true })
 
 -- Mapeamento para Ctrl + e para executar o comando :Ex e abrir o explorador de arquivos
-vim.api.nvim_set_keymap("n", "<leader>e", ":Ex<CR>", { noremap = true, silent = true })
+keymap("n", "<leader>e", ":Ex<CR>", silent)
 
 -- Mapeamento de Setas pra fazer o resize do split da tela
-vim.api.nvim_set_keymap("n", "<M-Up>", [[:resize -5<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<M-Down>", [[:resize +5<CR>]], { noremap = true, silent = true })
+keymap("n", "<M-Up>", [[:resize -5<CR>]], silent)
+keymap("n", "<M-Down>", [[:resize +5<CR>]], silent)
 
-vim.api.nvim_set_keymap("n", "<M-Left>", [[:vertical resize -5<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<M-Right>", [[:vertical resize +5<CR>]], { noremap = true, silent = true })
+keymap("n", "<M-Left>", [[:vertical resize -5<CR>]], silent)
+keymap("n", "<M-Right>", [[:vertical resize +5<CR>]], silent)
 
 -- Mapeamento de SplitVertical
-vim.api.nvim_set_keymap("n", "<leader>/", [[:vsplit<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>?", [[:split<CR>]], { noremap = true, silent = true })
+keymap("n", "<leader>/", [[:vsplit<CR>]], silent)
+keymap("n", "<leader>?", [[:split<CR>]], silent)
 
-vim.api.nvim_set_keymap("x", "<leader>p", '"_dP', { noremap = true, silent = true })
+keymap("x", "<leader>p", '"_dP', silent)
 
 -- Format Buffer Native Lsp
-vim.keymap.set("n", "<C-A-L>", vim.lsp.buf.format, { noremap = true, silent = true })
+keymap("n", "<C-A-L>", vim.lsp.buf.format, silent)
 
-vim.keymap.set(
+keymap(
 	"n",
 	"<leader>ca",
 	vim.lsp.buf.code_action,
-	{ noremap = true, silent = true }
+  silent
 )
 
-vim.api.nvim_create_user_command("CodeAction",
+createCommand("CodeAction",
 function ()
 	vim.lsp.buf.code_action()
-end, {})
+end, silent)
 
-vim.api.nvim_create_user_command("Format",
+createCommand("Format",
 function()
 	vim.lsp.buf.format()
-end, {})
+end, silent)
 
 -- Set Background Transparent
-vim.api.nvim_create_user_command("Transparent", require("resources.theme_utils").set_background_transparent, {})
+createCommand("Transparent", require("resources.theme_utils").set_background_transparent, {})
