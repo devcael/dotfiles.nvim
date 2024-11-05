@@ -22,4 +22,4 @@ vim.opt.clipboard:append("unnamed")
 vim.opt.termguicolors = true
 vim.cmd [[ colorscheme rose-pine ]]
 
-require("resources.theme_utils").set_background_transparent()
+-- require("resources.theme_utils").set_background_transparent()

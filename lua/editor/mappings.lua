@@ -36,18 +36,18 @@ keymap(
 	"n",
 	"<leader>ca",
 	vim.lsp.buf.code_action,
-  silent
+  {}
 )
 
 createCommand("CodeAction",
 function ()
 	vim.lsp.buf.code_action()
-end, silent)
+end, {})
 
 createCommand("Format",
 function()
 	vim.lsp.buf.format()
-end, silent)
+end, {})
 
 -- Set Background Transparent
 createCommand("Transparent", require("resources.theme_utils").set_background_transparent, {})
