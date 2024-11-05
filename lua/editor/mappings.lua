@@ -24,7 +24,7 @@ keymap("n", "<M-Left>", [[:vertical resize -5<CR>]], silent)
 keymap("n", "<M-Right>", [[:vertical resize +5<CR>]], silent)
 
 -- Mapeamento de SplitVertical
-keymap("n", "<leader>/", [[:vsplit<CR>]], silent)
+keymap("n", "<leader>/", [[:vsplit<CR>]], { silent = true, noremap = true })
 keymap("n", "<leader>?", [[:split<CR>]], silent)
 
 keymap("x", "<leader>p", '"_dP', silent)
@@ -51,3 +51,14 @@ end, {})
 
 -- Set Background Transparent
 createCommand("Transparent", require("resources.theme_utils").set_background_transparent, {})
+
+
+function OpenGrepPrompt()
+  vim.cmd('command! -nargs=* Grep execute "grep" <q-args>')
+  vim.fn.inputsave()
+  local cmd = vim.fn.input('Grep > ')
+  vim.fn.inputrestore()
+  vim.cmd('execute "Grep " . fnameescape(' .. cmd .. ')')
+end
+
+vim.api.nvim_set_keymap('n', '<leader>g', ':lua OpenGrepPrompt()<CR>', { noremap = true, silent = true })
