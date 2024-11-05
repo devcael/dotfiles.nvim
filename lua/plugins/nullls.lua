@@ -24,7 +24,7 @@ null.setup({
   sources = {
     null.builtins.formatting.stylua,
     null.builtins.diagnostics.eslint,
-    null.builtins.completion.spell,
+    -- null.builtins.completion.spell,
     null.builtins.formatting.gofmt,
     null.builtins.formatting.goimports,
     -- Todo: Corrigir erro com o tsserver

@@ -1,4 +1,4 @@
-local lsp_config = require("plugins.lsp_config") 
+local lsp_config = require("plugins.lsp_config")
 local utils = require("resources.utils")
 
 local jdk17_path = function()

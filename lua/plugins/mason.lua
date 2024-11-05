@@ -17,7 +17,8 @@ require("mason-lspconfig").setup {
     "lua_ls",
     "rust_analyzer",
     "html",
-    "cssls"
+    "cssls",
+    "clangd"
   },
 }
 

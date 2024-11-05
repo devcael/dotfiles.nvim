@@ -1,4 +1,3 @@
-
 local key_map = function(mode, key, result)
   vim.api.nvim_set_keymap(
     mode,
@@ -43,9 +42,8 @@ dap.configurations.java = {
 }
 
 function attach_to_debug()
-  local dap = require('dap')
   dap.continue()
-end 
+end
 
 key_map('n', '<leader>da', ':lua attach_to_debug()<CR>')
 
