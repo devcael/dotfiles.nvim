@@ -21,7 +21,7 @@ require("lazy").setup("plugins", {
   checker = { enabled = false },
   change_detection = {
     enabled = true,
-    notify = false,
+    notify = true,
   },
   concurrency = 5,
   performance = {
