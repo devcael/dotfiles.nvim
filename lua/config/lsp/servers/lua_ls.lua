@@ -1,13 +1,15 @@
-local lsp = require('lspconfig')
-local lsp_conf = require('config.lsp.commom')
+local M = {}
 
-lsp.lua_ls.setup {
-  on_attach = lsp_conf.on_attach,
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT"
-      }
+M.settings = {
+  Lua = {
+    runtime = {
+      version = "LuaJIT"
+    },
+    diagnostics = {
+      globals = { 'vim', 'bit', 'packer_plugins' }
     }
   }
 }
+
+return M
+

@@ -14,18 +14,7 @@ return {
     },
     lazy = false,
     config = function()
-      require("mason-lspconfig").setup {
-        ensure_installed = {
-          'vimls',
-          'volar',
-          'gopls',
-          'volar',
-          "lua_ls",
-          "html",
-          "cssls",
-          "clangd"
-        },
-      }
+      require("mason-lspconfig").setup()
     end
   },
   {
@@ -40,7 +29,7 @@ return {
               package_uninstalled = "✗"
             }
           }
-        })    
+        })   
     end
   }
 }

@@ -24,7 +24,9 @@ require 'lspconfig'.ts_ls.setup({
   filetypes = {
     "javascript",
     "typescript",
-    "vue"
+    "vue",
+    "jsx",
+    "tsx"
   },
 })
 
