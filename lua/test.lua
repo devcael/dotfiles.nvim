@@ -9,6 +9,12 @@ local function run_command(cmd)
   end
 end
 
-run_command("comando")
+function getPath()
+  return "Micael"
+end
 
+local value = {
+  path = getPath()
+}
 
+print(value.path)

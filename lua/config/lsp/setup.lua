@@ -16,6 +16,7 @@ mason.setup({
 
 mason_lsp.setup({
   ensure_installed = {
+    'ts_ls',
     'vimls',
     'volar',
     'gopls',
@@ -62,16 +63,15 @@ require("mason-lspconfig").setup_handlers {
 
   ["ts_ls"] = function()
     lspconfig.ts_ls.setup({
-      handlers = require("config.lsp.servers.tsserver").handlers,
       capabilities = capabilities,
-      on_attach = require("config.lsp.servers.tsserver").on_attach,
-      root_dir = vim.loop.cwd,
+      on_attach = on_attach,
+      root_dir = util.root_pattern 'package.json',
       init_options = {
         hostInfo = "neovim",
         plugins = {
           {
             name = "@vue/typescript-plugin",
-            location = require("config.lsp.servers.tsserver").get_vue_lib_path,
+            location = require("config.lsp.servers.tsserver").get_vue_lib_path(),
             languages = { "vue" }
           },
         },
@@ -94,10 +94,9 @@ require("mason-lspconfig").setup_handlers {
       root_dir = util.root_pattern 'package.json',
       init_options = {
         typescript = {
-          tsdk = require("config.lsp.servers.tsserver").get_vue_lib_path
+          tsdk = require("config.lsp.servers.tsserver").get_tsdk()
         },
       }
     })
   end,
-
 }

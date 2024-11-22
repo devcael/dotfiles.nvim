@@ -44,14 +44,6 @@ local handlers = {
     vim.lsp.diagnostic.on_publish_diagnostics,
     { virtual_text = true }
   ),
-  -- ["textDocument/definition"] = function(err, result, method, ...)
-  --   if vim.tbl_islist(result) and #result > 1 then
-  --     local filtered_result = filter(result, filterReactDTS)
-  --     return vim.lsp.handlers["textDocument/definition"](err, filtered_result, method, ...)
-  --   end
-
-  --   vim.lsp.handlers["textDocument/definition"](err, result, method, ...)
-  -- end,
 }
 
 local settings = {
@@ -84,9 +76,8 @@ local settings = {
 }
 
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   vim.lsp.inlay_hint.enable(true, { bufnr })
-  -- require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
 end
 
 M.handlers = handlers
