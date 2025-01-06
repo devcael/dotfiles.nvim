@@ -20,3 +20,5 @@ vim.opt.cursorline = true
 vim.opt.guicursor = "n-v-i-c:block"
 
 vim.opt.clipboard:append("unnamed")
+
+require("resources.theme_utils").set_background_transparent()

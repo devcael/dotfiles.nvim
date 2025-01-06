@@ -19,7 +19,6 @@ mason_lsp.setup({
     'ts_ls',
     'vimls',
     'volar',
-    'gopls',
     'volar',
     "lua_ls",
     "html",
@@ -81,7 +80,11 @@ require("mason-lspconfig").setup_handlers {
         "typescript",
         "vue",
         "jsx",
-        "tsx"
+        "tsx",
+        'typescript',
+        'javascript',
+        'javascriptreact',
+        'typescriptreact'
       },
     })
   end,
@@ -90,7 +93,7 @@ require("mason-lspconfig").setup_handlers {
     lspconfig.volar.setup({
       on_attach = on_attach,
       capabilities = capabilities,
-      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+      filetypes = { 'vue', 'json' },
       root_dir = util.root_pattern 'package.json',
       init_options = {
         typescript = {
