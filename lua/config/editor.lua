@@ -17,7 +17,7 @@ vim.g.mapleader = " "
 vim.opt.fillchars:append({ eob = " " })
 
 vim.opt.cursorline = true
-vim.opt.guicursor = "n-v-i-c:block"
+vim.opt.guicursor = "n-v-c:block,i:hor10"
 
 vim.opt.clipboard:append("unnamed")
 
