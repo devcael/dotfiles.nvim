@@ -21,3 +21,7 @@ npm install -g typescript
 git clone https://github.com/github/copilot.vim.git \
   ~/.config/nvim/pack/github/start/copilot.vim
 ```
+
+
+## TODO: 
+- [ ] Adicionar flutter tools [flutter-tools](https://github.com/nvim-flutter/flutter-tools.nvim)
