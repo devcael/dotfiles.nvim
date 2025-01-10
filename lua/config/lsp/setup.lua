@@ -41,14 +41,32 @@ local handlers = {
 local on_attach = require("config.lsp.commom").on_attach
 local capabilities = require("config.lsp.commom").capabilities
 
+function setupDartLs()
+  local dartls = require("lspconfig").dartls
+  dartls.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    handlers = handlers,
+    filetypes = { "dart" },
+    root_dir = util.root_pattern("pubspec.yaml", "analysis_options.yaml"),
+    init_options = {
+      closingLabels = true,
+      flutterOutline = true,
+      onlyAnalyzeProjectsWithOpenFiles = true,
+      suggestFromUnimportedLibraries = false,
+    },
+  })
+end
 
 require("mason-lspconfig").setup_handlers {
   function(server_name)
-    require("lspconfig")[server_name].setup {
+    lspconfig[server_name].setup {
       on_attach = on_attach,
       capabilities = capabilities,
       handlers = handlers,
     }
+
+    setupDartLs()
   end,
 
   ["lua_ls"] = function()
