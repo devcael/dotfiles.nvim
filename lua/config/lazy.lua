@@ -20,8 +20,8 @@ require("lazy").setup("plugins", {
   install = { colorscheme = { "tokyodark" } },
   checker = { enabled = false },
   change_detection = {
-    enabled = true,
-    notify = true,
+    enabled = false,
+    notify = false,
   },
   concurrency = 5,
   performance = {

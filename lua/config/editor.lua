@@ -14,6 +14,7 @@ vim.o.shiftwidth = 2
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.g.mapleader = " "
+vim.o.scrolloff = 999  -- Um valor muito alto
 vim.opt.fillchars:append({ eob = " " })
 
 vim.opt.cursorline = true

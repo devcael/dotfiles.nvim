@@ -1,6 +1,7 @@
 local keymap = vim.keymap.set
 local createCommand = vim.api.nvim_create_user_command
 local silent = { silent = true }
+local mn = require("resources.keymap_utils").mapNum
 
 -- Mapeamento para selecionar a palavra atual
 keymap("n", "<leader>w", "viw", silent)
@@ -16,7 +17,7 @@ keymap("i", "<C-v>", "<C-r>+", { noremap = true })
 -- Mapeamento para Ctrl + e para executar o comando :Ex e abrir o explorador de arquivos
 keymap("n", "<leader>e", ":Ex<CR>", silent)
 
--- Mapeamento de Setas pra fazer o resize do split da tela
+-- Mapeamento de Setas pra ler o resize do split da tela
 keymap("n", "<M-Up>", [[:resize -5<CR>]], silent)
 keymap("n", "<M-Down>", [[:resize +5<CR>]], silent)
 
@@ -67,12 +68,14 @@ vim.api.nvim_set_keymap('n', '<leader>g', ':lua OpenGrepPrompt()<CR>', { noremap
 function hide_diagnostics()
   vim.diagnostic.config({
     virtual_text = false,
+    underline = false,
   })
 end
 
 function show_diagnostics()
   vim.diagnostic.config({
     virtual_text = true,
+    underline = true,
   })
 end
 
@@ -89,8 +92,8 @@ vim.api.nvim_set_keymap('i', '<C-c>', '<Esc>:w<CR>', { noremap = true, silent = 
 -- No modo inserção, sair para o modo normal e salvar o arquivo
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
 
--- Fechar arquivo com Ctrl + Q
-vim.keymap.set("n", "<C-q>", ":bd<CR>", { noremap = true, silent = true })
+-- Fechar arquivo com Espace + Q
+vim.keymap.set("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
 
 -- Salvar arquivo com F12 no modo Normal
 vim.api.nvim_set_keymap('n', '<F12>', ':w<CR>', { noremap = true, silent = true })
@@ -110,13 +113,16 @@ vim.api.nvim_set_keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, sile
 vim.api.nvim_set_keymap('n', '<leader>r', ':%s/\\<<C-r><C-w>\\>//g<Left><Left>', { noremap = true, silent = false })
 --
 vim.api.nvim_set_keymap('n', 'xi', 'ci\'', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', 'xo', 'ci"', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', 'xI', 'ci"', { noremap = true, silent = false })
 
 vim.api.nvim_set_keymap('n', 'xai', 'ca\'', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', 'xao', 'ca"', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', 'xaI', 'ca"', { noremap = true, silent = false })
 
-vim.api.nvim_set_keymap('n', 'xb', 'ci{', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', 'xB', 'ca{', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', 'xo', 'di\'', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', 'xO', 'di"', { noremap = true, silent = false })
+
+vim.api.nvim_set_keymap('n', 'xao', 'da\'', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', 'xaO', 'da"', { noremap = true, silent = false })
 
 -- Mover para a janela à esquerda, direita, acima ou abaixo
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
@@ -136,3 +142,12 @@ vim.api.nvim_set_keymap('n', '<Up>', '<C-w>k', { noremap = true, silent = true }
 -- Mover para a janela abaixo
 vim.api.nvim_set_keymap('n', '<Down>', '<C-w>j', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', 'cw', 'caw', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'dw', 'daw', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', 'cW', 'caW', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'dW', 'daW', { noremap = true, silent = true })
+
+-- Desabilitar copilor leader + dc
+vim.api.nvim_set_keymap('n', '<leader>dc', ':Copilot disable<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ec', ':Copilot enable<CR>', { noremap = true, silent = true })
