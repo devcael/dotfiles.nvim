@@ -28,3 +28,5 @@ vim.diagnostic.config({
 })
 
 require("resources.theme_utils").set_background_transparent()
+
+

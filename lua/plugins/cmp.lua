@@ -18,8 +18,8 @@ return {
           end,
         },
         window = {
-          completion = cmp.config.window.bordered({ border = 'rounded' }),
-          documentation = cmp.config.window.bordered(),
+          -- completion = cmp.config.window.bordered({ border = 'rounded' }),
+          -- documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert({
           ['<enter>'] = cmp.mapping.confirm({ select = true }),
