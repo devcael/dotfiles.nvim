@@ -87,7 +87,7 @@ vim.keymap.set("n", "<leader>ds", show_diagnostics)
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 
 -- No modo inserção, sair para o modo normal e salvar o arquivo
-vim.api.nvim_set_keymap('i', '<C-c>', '<Esc>:w<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', '<C-c>', '<Esc>:w<CR>', { noremap = true, silent = true })
 
 -- No modo inserção, sair para o modo normal e salvar o arquivo
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
