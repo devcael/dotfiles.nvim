@@ -48,7 +48,7 @@ return {
 
       })
 
-      vim.cmd("colorscheme rose-pine")
+      -- vim.cmd("colorscheme rose-pine")
       vim.opt.termguicolors = true
 
       require("resources.theme_utils").set_background_transparent()
