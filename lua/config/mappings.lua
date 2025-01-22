@@ -87,7 +87,7 @@ vim.keymap.set("n", "<leader>ds", show_diagnostics)
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 
 -- No modo inserção, sair para o modo normal e salvar o arquivo
-vim.api.nvim_set_keymap('i', '<C-c>', '<Esc>:w<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', '<C-c>', '<Esc>:w<CR>', { noremap = true, silent = true })
 
 -- No modo inserção, sair para o modo normal e salvar o arquivo
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
@@ -126,7 +126,7 @@ vim.api.nvim_set_keymap('n', 'xaO', 'da"', { noremap = true, silent = false })
 
 -- Mover para a janela à esquerda, direita, acima ou abaixo
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
 
