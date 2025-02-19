@@ -10,7 +10,7 @@ return {
       
       -- TODO: Alterar para o shell com base no dispositivo
       local shell = function()
-          return 'fish'
+          return 'bash'
       end
       
       toggleterm.setup({
