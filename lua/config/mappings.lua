@@ -4,7 +4,9 @@ local silent = { silent = true }
 local mn = require("resources.keymap_utils").mapNum
 
 -- Mapeamento para selecionar a palavra atual
-keymap("n", "<leader>w", "viw", silent)
+keymap("n", "<leader>w", ":w", silent)
+keymap("n", "fj", "<C-d>", silent)
+keymap("n", "fk", "<C-u>", silent)
 
 -- Mepeamento para copiar texto com Ctrl + Shift + C
 keymap("n", "<C-S-c>", '"+y', { noremap = true })

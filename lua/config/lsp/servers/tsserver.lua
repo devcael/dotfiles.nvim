@@ -10,10 +10,6 @@ local get_ts_lib_path = function()
   if command.path_exists(lib_path) then
     return lib_path
   end
-
-  print("installing  vue/typescript plugin")
-  local result = command.run("npm install -g @vue/typescript-plugin")
-  print(result)
 end
 
 local get_vue_lib_path = function()
@@ -24,10 +20,6 @@ local get_vue_lib_path = function()
   if command.path_exists(lib_path) then
     return lib_path
   end
-
-  print("installing typescript plugin")
-  local result = command.run("npm install -g typescript")
-  print(result)
 end
 
 
