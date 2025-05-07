@@ -121,3 +121,18 @@ require("mason-lspconfig").setup_handlers {
     })
   end,
 }
+
+require("mason-registry").refresh(function()
+  local debug_adapters = {
+    "node-debug2-adapter",
+    "chrome-debug-adapter",
+  }
+  
+  for _, adapter in ipairs(debug_adapters) do
+    local p = require("mason-registry").get_package(adapter)
+    if not p:is_installed() then
+      p:install()
+    end
+  end
+end)
+

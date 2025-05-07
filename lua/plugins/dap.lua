@@ -1,15 +1,18 @@
 return {
   {
     'mfussenegger/nvim-dap',
-  },
-  {
-    'rcarriga/cmp-dap',
-  },
-  {
-    'nvim-neotest/nvim-nio',
+    dependencies = {
+      'rcarriga/nvim-dap-ui',
+      'nvim-neotest/nvim-nio',
+      'rcarriga/cmp-dap',
+    },
+    config = function()
+      -- Carrega a configuração do DAP
+      require("config.dap").setup()
+    end
   },
   {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap' },
+    dependencies = { 'mfussenegger/nvim-dap' },
   }
 }
