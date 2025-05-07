@@ -7,7 +7,6 @@ return {
       'rcarriga/cmp-dap',
     },
     config = function()
-      -- Carrega a configuração do DAP
       require("config.dap").setup()
     end
   },
