@@ -10,7 +10,7 @@ return {
           light = "latte",
           dark = "mocha",
         },
-        transparent_background = false, -- disables setting the background color.
+        transparent_background = true, -- disables setting the background color.
         show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
         term_colors = false,        -- sets terminal colors (e.g. `g:terminal_color_0`)
         dim_inactive = {
@@ -22,7 +22,7 @@ return {
         no_bold = false,            -- Force no bold
         no_underline = false,       -- Force no underline
         styles = {                  -- Handles the styles of general hi groups (see `:h highlight-args`):
-          comments = { "italic" },  -- Change the style of comments
+          comments = { "italic" },
           conditionals = { "italic" },
           loops = {},
           functions = {},
@@ -34,7 +34,6 @@ return {
           properties = {},
           types = {},
           operators = {},
-          -- miscs = {}, -- Uncomment to turn off hard-coded styles
         },
         color_overrides = {},
         custom_highlights = {},
@@ -49,11 +48,9 @@ return {
             enabled = true,
             indentscope_color = "",
           },
-          -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
         },
       })
 
-      -- setup must be called before loading
       vim.cmd.colorscheme "catppuccin"
     end
   }
