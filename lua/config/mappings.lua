@@ -3,10 +3,17 @@ local createCommand = vim.api.nvim_create_user_command
 local silent = { silent = true }
 local mn = require("resources.keymap_utils").mapNum
 
--- Mapeamento para selecionar a palavra atual
-keymap("n", "<leader>w", ":w", silent)
+keymap("n", "<leader>w", ":w<CR>", silent)
 keymap("n", "fj", "<C-d>", silent)
 keymap("n", "fk", "<C-u>", silent)
+
+keymap("i", "jj", "<Esc>", { noremap = true })
+
+keymap("n", "<C-s>", ":w<CR>", { noremap = true })
+keymap("n", "<C-q>", ":wqa<CR>", { noremap = true })
+keymap("n", "<C-x>", ":q!<CR>", { noremap = true })
+keymap("n", "<leader>x", ":q!<CR>", { noremap = true })
+
 
 -- Mepeamento para copiar texto com Ctrl + Shift + C
 keymap("n", "<C-S-c>", '"+y', { noremap = true })
@@ -17,7 +24,7 @@ keymap("n", "<C-v>", '"+p', { noremap = true })
 keymap("i", "<C-v>", "<C-r>+", { noremap = true })
 
 -- Mapeamento para Ctrl + e para executar o comando :Ex e abrir o explorador de arquivos
-keymap("n", "<leader>e", ":Ex<CR>", silent)
+-- keymap("n", "<leader>e", ":Ex<CR>", silent)
 
 -- Mapeamento de Setas pra ler o resize do split da tela
 keymap("n", "<M-Up>", [[:resize -5<CR>]], silent)
@@ -94,7 +101,7 @@ vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 -- No modo inserção, sair para o modo normal e salvar o arquivo
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
 
--- Fechar arquivo com Espace + Q
+-- Fechar arquivo com Espace + Qvim
 vim.keymap.set("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
 
 -- Salvar arquivo com F12 no modo Normal

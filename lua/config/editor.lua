@@ -27,7 +27,7 @@ vim.diagnostic.config({
   underline = false,
 })
 
-require("resources.theme_utils").set_background_normal()
+require("resources.theme_utils").set_background_transparent()
 
 
 
