@@ -13,9 +13,6 @@ return {
       "mason.nvim",
     },
     lazy = false,
-    config = function()
-      require("mason-lspconfig").setup()
-    end
   },
   {
     "williamboman/mason.nvim",

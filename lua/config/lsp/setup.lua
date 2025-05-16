@@ -14,20 +14,6 @@ mason.setup({
   },
 })
 
-mason_lsp.setup({
-  ensure_installed = {
-    'ts_ls',
-    'vimls',
-    'volar',
-    'volar',
-    "lua_ls",
-    "html",
-    "cssls",
-    "clangd"
-  },
-  automatic_installation = true,
-})
-
 local lspconfig = require("lspconfig")
 
 local handlers = {

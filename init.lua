@@ -1,4 +1,4 @@
 require("config.editor")
 require("config.lazy")
-require("config.lsp.setup")
+require("config.lsp.servers.jdtls")
 require("config.mappings")
