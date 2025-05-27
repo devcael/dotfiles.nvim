@@ -19,12 +19,7 @@ local function find_java_path()
     -- os.getenv("JAVA_HOME_NVIM") and (os.getenv("JAVA_HOME_NVIM") .. "/bin/java"),
     -- os.getenv("JAVA_HOME") and (os.getenv("JAVA_HOME") .. "/bin/java"),
     
-    "C:/Program Files/Java/jdk-22*/bin/java.exe",
-    "C:/Program Files/Eclipse Adoptium/jdk-17*/bin/java.exe",
-    
-    "/Library/Java/JavaVirtualMachines/jdk-17*.jdk/Contents/Home/bin/java",
-    
-    "/usr/lib/jvm/java-17*/bin/java",
+    "C:/Program Files/Java/jdk-21*/bin/java.exe",
     
     "java"
   }
@@ -59,12 +54,18 @@ local root_files = {
     "gradlew",
     "pom.xml",
     "build.gradle",
+    "build.xml",
+    "nbproject",
 }
 
 local features = {
     codelens = true,
     debugger = true,
 }
+
+local function get_mason_install_path(path)
+  return vim.fn.expand("$MASON") .. "/packages" .. path
+end
 
 local function get_jdtls_paths()
     if cache_vars.paths then
@@ -75,7 +76,7 @@ local function get_jdtls_paths()
 
     path.data_dir = vim.fn.stdpath("cache") .. "/nvim-jdtls"
 
-    local jdtls_install = require("mason-registry").get_package("jdtls"):get_install_path()
+    local jdtls_install = get_mason_install_path("/jdtls")
 
     path.java_agent = jdtls_install .. "/lombok.jar"
     path.launcher_jar = vim.fn.glob(jdtls_install .. "/plugins/org.eclipse.equinox.launcher_*.jar")
@@ -90,7 +91,7 @@ local function get_jdtls_paths()
 
     path.bundles = {}
 
-    local java_test_path = require("mason-registry").get_package("java-test"):get_install_path()
+    local java_test_path = get_mason_install_path("java-test")
 
     local java_test_bundle = vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar"), "\n")
 
@@ -98,7 +99,7 @@ local function get_jdtls_paths()
         vim.list_extend(path.bundles, java_test_bundle)
     end
 
-    local java_debug_path = require("mason-registry").get_package("java-debug-adapter"):get_install_path()
+    local java_debug_path = get_mason_install_path("java-debug-adapter")
 
     local java_debug_bundle =
         vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n")
@@ -202,13 +203,15 @@ local function jdtls_setup(event)
 
     local lsp_settings = {
         java = {
-      bundles = {},
-      search = {
-        scope = "all"
-      },
-      project = {
-        referencedLibraries = jars,
-      },
+            bundles = {},
+            search = {
+              scope = "all"
+            },
+            project = {
+              referencedLibraries = {
+                  "G:/SISTEMAS/LIB/*.jar",
+              },
+            },
             eclipse = {
                 downloadSources = true,
             },
@@ -227,7 +230,7 @@ local function jdtls_setup(event)
             },
             inlayHints = {
                 parameterNames = {
-                    enabled = "all", -- literals, all, none
+                    enabled = "all",
                 },
             },
             format = {

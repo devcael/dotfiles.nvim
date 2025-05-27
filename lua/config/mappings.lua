@@ -10,7 +10,7 @@ keymap("n", "fk", "<C-u>", silent)
 keymap("i", "jj", "<Esc>", { noremap = true })
 
 keymap("n", "<C-s>", ":w<CR>", { noremap = true })
-keymap("n", "<C-q>", ":wqa<CR>", { noremap = true })
+-- keymap("n", "<C-q>", ":wqa<CR>", { noremap = true })
 keymap("n", "<C-x>", ":q!<CR>", { noremap = true })
 keymap("n", "<leader>x", ":q!<CR>", { noremap = true })
 

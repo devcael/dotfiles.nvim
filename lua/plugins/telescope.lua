@@ -49,7 +49,9 @@ return {
       vim.keymap.set('n', '<leader>ps', function()
         builtin.grep_string({ search = vim.fn.input("Grep > ") });
       end)
-
+      vim.keymap.set('n', '<A-]>', function()
+        require('telescope.builtin').lsp_document_symbols()
+      end, { noremap = true, silent = true })
     end
   }
 }
