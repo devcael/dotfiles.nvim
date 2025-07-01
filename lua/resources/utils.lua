@@ -198,4 +198,154 @@ function M.find_main_class()
   return "com.example.Application" -- fallback
 end
 
+-- Funções específicas para Flutter/Dart
+function M.is_flutter_project()
+  return vim.loop.fs_stat("pubspec.yaml") ~= nil
+end
+
+function M.is_dart_project()
+  return vim.loop.fs_stat("pubspec.yaml") ~= nil or vim.loop.fs_stat("analysis_options.yaml") ~= nil
+end
+
+function M.find_flutter_main_file()
+  local main_files = {"lib/main.dart", "bin/main.dart", "web/main.dart"}
+  
+  for _, file in ipairs(main_files) do
+    if vim.loop.fs_stat(file) then
+      return file
+    end
+  end
+  
+  return "lib/main.dart" -- fallback
+end
+
+function M.get_flutter_devices()
+  local devices = {}
+  local handle = io.popen("flutter devices --machine 2>/dev/null")
+  
+  if handle then
+    local result = handle:read("*a")
+    handle:close()
+    
+    if result and result ~= "" then
+      local success, parsed = pcall(vim.json.decode, result)
+      if success and parsed then
+        for _, device in ipairs(parsed) do
+          table.insert(devices, {
+            id = device.id,
+            name = device.name,
+            platform = device.platform,
+            category = device.category,
+            emulator = device.emulator or false
+          })
+        end
+      end
+    end
+  end
+  
+  -- Fallback se não conseguir obter dispositivos
+  if #devices == 0 then
+    table.insert(devices, {
+      id = "chrome",
+      name = "Chrome",
+      platform = "web-javascript",
+      category = "web",
+      emulator = false
+    })
+  end
+  
+  return devices
+end
+
+function M.select_flutter_device()
+  local devices = M.get_flutter_devices()
+  
+  if #devices == 0 then
+    vim.notify("Nenhum dispositivo Flutter encontrado!", vim.log.levels.ERROR)
+    return nil
+  end
+  
+  local items = {}
+  for i, device in ipairs(devices) do
+    local icon = device.emulator and "📱" or "🔗"
+    local status = device.category == "web" and "🌐" or device.category == "mobile" and "📱" or "💻"
+    table.insert(items, string.format("%d. %s %s %s (%s)", i, icon, status, device.name, device.platform))
+  end
+  
+  vim.ui.select(items, {
+    prompt = "Selecione o dispositivo Flutter:",
+  }, function(choice, idx)
+    if choice and idx then
+      cache_vars.selected_flutter_device = devices[idx]
+      vim.notify("Dispositivo selecionado: " .. devices[idx].name)
+    end
+  end)
+  
+  return cache_vars.selected_flutter_device
+end
+
+function M.get_flutter_flavors()
+  local flavors = {"development", "staging", "production"}
+  local env_vars = M.load_env_files()
+  
+  -- Adicionar flavor do .env se existir
+  if env_vars.FLUTTER_FLAVOR then
+    table.insert(flavors, 1, env_vars.FLUTTER_FLAVOR)
+  end
+  
+  return flavors
+end
+
+function M.get_dart_entry_points()
+  local entry_points = {}
+  
+  -- Procurar por arquivos main.dart
+  local main_files = {
+    "lib/main.dart",
+    "bin/main.dart", 
+    "web/main.dart",
+    "test/main_test.dart"
+  }
+  
+  for _, file in ipairs(main_files) do
+    if vim.loop.fs_stat(file) then
+      table.insert(entry_points, file)
+    end
+  end
+  
+  return entry_points
+end
+
+function M.create_flutter_env_template()
+  return [[
+# Flutter Configuration
+FLUTTER_FLAVOR=development
+FLUTTER_TARGET=lib/main.dart
+
+# Build Configuration  
+FLUTTER_BUILD_MODE=debug
+FLUTTER_OBFUSCATE=false
+FLUTTER_SPLIT_DEBUG_INFO=false
+
+# Web Configuration
+FLUTTER_WEB_PORT=3000
+FLUTTER_WEB_HOSTNAME=localhost
+
+# Android Configuration
+ANDROID_DEVICE_ID=
+ANDROID_SIGNING_KEY=
+
+# iOS Configuration  
+IOS_DEVICE_ID=
+IOS_PROVISIONING_PROFILE=
+
+# Debug Configuration
+DART_DEBUG_PORT=8181
+FLUTTER_DEBUG_PORT=8080
+
+# Development Tools
+FLUTTER_INSPECTOR_PORT=9100
+]]
+end
+
 return M
