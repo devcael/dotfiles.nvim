@@ -11,7 +11,100 @@ end
 
 local jars = get_referenced_jars('G:\\SISTEMAS\\LIB\\*.jar')
 
+-- Função para obter versões disponíveis do Java
+local function get_available_java_versions()
+  local java_versions = {}
+  local home_path = utils.get_home_path()
+  
+  -- SDKMAN paths
+  local sdkman_java_path = home_path .. "/.sdkman/candidates/java"
+  if vim.loop.fs_stat(sdkman_java_path) then
+    local handle = vim.loop.fs_scandir(sdkman_java_path)
+    if handle then
+      local name = vim.loop.fs_scandir_next(handle)
+      while name do
+        if name ~= "current" then
+          local java_bin = sdkman_java_path .. "/" .. name .. "/bin/java"
+          if vim.fn.executable(java_bin) == 1 then
+            table.insert(java_versions, {
+              name = "SDKMAN - " .. name,
+              path = java_bin,
+              version = name
+            })
+          end
+        end
+        name = vim.loop.fs_scandir_next(handle)
+      end
+    end
+  end
+  
+  -- Windows Program Files
+  local windows_java_paths = {
+    "C:/Program Files/Java",
+    "C:/Program Files/Eclipse Adoptium"
+  }
+  
+  for _, base_path in ipairs(windows_java_paths) do
+    if vim.loop.fs_stat(base_path) then
+      local handle = vim.loop.fs_scandir(base_path)
+      if handle then
+        local name = vim.loop.fs_scandir_next(handle)
+        while name do
+          local java_bin = base_path .. "/" .. name .. "/bin/java.exe"
+          if vim.fn.executable(java_bin) == 1 then
+            table.insert(java_versions, {
+              name = "Windows - " .. name,
+              path = java_bin,
+              version = name
+            })
+          end
+          name = vim.loop.fs_scandir_next(handle)
+        end
+      end
+    end
+  end
+  
+  -- Sistema padrão
+  if vim.fn.executable("java") == 1 then
+    table.insert(java_versions, {
+      name = "Sistema Padrão",
+      path = "java",
+      version = "default"
+    })
+  end
+  
+  return java_versions
+end
+
+local function select_java_version()
+  local versions = get_available_java_versions()
+  if #versions == 0 then
+    vim.notify("Nenhuma versão do Java encontrada!", vim.log.levels.ERROR)
+    return "java"
+  end
+  
+  local items = {}
+  for i, version in ipairs(versions) do
+    table.insert(items, string.format("%d. %s", i, version.name))
+  end
+  
+  vim.ui.select(items, {
+    prompt = "Selecione a versão do Java:",
+  }, function(choice, idx)
+    if choice and idx then
+      cache_vars.selected_java = versions[idx].path
+      vim.notify("Java selecionado: " .. versions[idx].name)
+    end
+  end)
+  
+  return cache_vars.selected_java or versions[1].path
+end
+
 local function find_java_path()
+  if cache_vars.selected_java then
+    return cache_vars.selected_java
+  end
+  
   local possible_paths = {
     utils.get_home_path() .. "/.sdkman/candidates/java/current/bin/java",
     utils.get_home_path() .. "/.sdkman/candidates/java/17.*/bin/java",
@@ -39,7 +132,7 @@ local function find_java_path()
     end
   end
   
-  return "java"
+  return select_java_version()
 end
 
 local java_path = find_java_path()

@@ -1,5 +1,8 @@
 local M = {}
 
+-- Cache global para variáveis do sistema
+_G.cache_vars = _G.cache_vars or {}
+
 -- Função para obter o caminho do diretório home do usuário
 M.get_home_path = function()
   return os.getenv("HOME") or os.getenv("USERPROFILE")
@@ -124,6 +127,75 @@ function M.format_env_vars(env_table)
   return table.concat(parts, " ")
 end
 
+-- Novas funções para gerenciamento de .env
+function M.load_env_files()
+  local env_files = {".env", ".env.local", ".env.development", ".env.production"}
+  local combined_vars = {}
+  
+  for _, file in ipairs(env_files) do
+    if vim.loop.fs_stat(file) then
+      local vars = M.load_env_vars(file)
+      for k, v in pairs(vars) do
+        combined_vars[k] = v
+      end
+      vim.notify("Carregado: " .. file, vim.log.levels.INFO)
+    end
+  end
+  
+  return combined_vars
+end
 
+function M.get_spring_profiles()
+  local profiles = {"dev", "test", "prod", "local"}
+  local env_vars = M.load_env_files()
+  
+  -- Adicionar perfil do .env se existir
+  if env_vars.SPRING_PROFILES_ACTIVE then
+    table.insert(profiles, 1, env_vars.SPRING_PROFILES_ACTIVE)
+  end
+  
+  return profiles
+end
+
+function M.select_spring_profile()
+  local profiles = M.get_spring_profiles()
+  
+  vim.ui.select(profiles, {
+    prompt = "Selecione o perfil Spring:",
+  }, function(choice)
+    if choice then
+      cache_vars.selected_profile = choice
+      vim.notify("Perfil selecionado: " .. choice)
+    end
+  end)
+  
+  return cache_vars.selected_profile or "dev"
+end
+
+function M.find_main_class()
+  -- Procura pela classe principal do Spring Boot
+  local main_class_patterns = {
+    ".*Application%.java$",
+    ".*App%.java$", 
+    ".*Main%.java$"
+  }
+  
+  for _, pattern in ipairs(main_class_patterns) do
+    local cmd = string.format('find . -name "%s" -type f', pattern:gsub("%.java$", ".java"))
+    local handle = io.popen(cmd)
+    if handle then
+      local result = handle:read("*a")
+      handle:close()
+      if result and result ~= "" then
+        local file_path = result:gsub("\n", "")
+        -- Converter caminho para package.classe
+        local package_class = file_path:gsub("^%./src/main/java/", ""):gsub("/", "."):gsub("%.java$", "")
+        return package_class
+      end
+    end
+  end
+  
+  return "com.example.Application" -- fallback
+end
 
 return M
