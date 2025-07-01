@@ -19,7 +19,7 @@ local function find_java_path()
     -- os.getenv("JAVA_HOME_NVIM") and (os.getenv("JAVA_HOME_NVIM") .. "/bin/java"),
     -- os.getenv("JAVA_HOME") and (os.getenv("JAVA_HOME") .. "/bin/java"),
     
-    "C:/Program Files/Java/jdk-21*/bin/java.exe",
+    "C:/Program Files/Java/jdk-22*/bin/java.exe",
     
     "java"
   }
@@ -53,9 +53,7 @@ local root_files = {
     "mvnw",
     "gradlew",
     "pom.xml",
-    "build.gradle",
-    "build.xml",
-    "nbproject",
+    "build.gradle"
 }
 
 local features = {
@@ -203,15 +201,6 @@ local function jdtls_setup(event)
 
     local lsp_settings = {
         java = {
-            bundles = {},
-            search = {
-              scope = "all"
-            },
-            project = {
-              referencedLibraries = {
-                  "G:/SISTEMAS/LIB/*.jar",
-              },
-            },
             eclipse = {
                 downloadSources = true,
             },

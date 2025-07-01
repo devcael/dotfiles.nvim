@@ -98,4 +98,32 @@ function M.os()
   return OSINFO;
 end
 
+function M.load_env_vars(filepath)
+  local vars = {}
+  local file = io.open(filepath, "r")
+  if not file then return vars end
+
+  for line in file:lines() do
+    local key, value = line:match("^%s*([%w_]+)%s*=%s*([^\n\r]*)%s*$")
+    if key and value then
+      -- Remove aspas se existirem
+      value = value:gsub([["]], ""):gsub([[\']], "")
+      vars[key] = value
+    end
+  end
+
+  file:close()
+  return vars
+end
+
+function M.format_env_vars(env_table)
+  local parts = {}
+  for k, v in pairs(env_table) do
+    table.insert(parts, string.format('%s="%s"', k, v))
+  end
+  return table.concat(parts, " ")
+end
+
+
+
 return M

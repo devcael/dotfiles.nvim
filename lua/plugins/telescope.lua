@@ -45,11 +45,11 @@ return {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
       vim.keymap.set('n', '<leader><C-p>', builtin.git_files, {})
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-      vim.keymap.set('n', '<C-b>', buffer_searcher, {})
+      vim.keymap.set('n', '<leader>fb', buffer_searcher, {})
       vim.keymap.set('n', '<leader>ps', function()
         builtin.grep_string({ search = vim.fn.input("Grep > ") });
       end)
-      vim.keymap.set('n', '<A-]>', function()
+      vim.keymap.set('n', 'g[', function()
         require('telescope.builtin').lsp_document_symbols()
       end, { noremap = true, silent = true })
     end

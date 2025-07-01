@@ -110,6 +110,16 @@ function M.setup()
   end
 
   dap.configurations.vue = dap.configurations.javascript
+
+  dap.configurations.java = {
+    {
+      type = 'java';
+      request = 'attach';
+      name = "Debug (Attach) - Remote";
+      hostName = "127.0.0.1";
+      port = 5005;
+    },
+  }
 end
 
 return M

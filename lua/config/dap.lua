@@ -78,7 +78,9 @@ function M.setup()
   end
 
   require("config.dap.javascript").setup()  
-  
+  require("config.dap.java").setup()
+  require("config.dap.spring-boot")
+
   vim.keymap.set("n", "<F5>", function() dap.continue() end, { silent = true })
   vim.keymap.set("n", "<F10>", function() dap.step_over() end, { silent = true })
   vim.keymap.set("n", "<F11>", function() dap.step_into() end, { silent = true })
