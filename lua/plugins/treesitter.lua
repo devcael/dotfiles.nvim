@@ -6,7 +6,7 @@ return {
     end,
     config = function () 
       require 'nvim-treesitter.configs'.setup {
-        ensure_installed = { "c", "typescript", "vue", "html", "css", "lua"},
+        ensure_installed = { "c", "typescript", "vue", "html", "css", "lua", "go", "gomod", "gowork", "gosum"},
         sync_install = false,
         auto_install = true,
         highlight = {

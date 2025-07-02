@@ -160,3 +160,41 @@ vim.api.nvim_set_keymap('n', 'dW', 'daW', { noremap = true, silent = true })
 -- Desabilitar copilor leader + dc
 vim.api.nvim_set_keymap('n', '<leader>dc', ':Copilot disable<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ec', ':Copilot enable<CR>', { noremap = true, silent = true })
+
+-- Go-specific mappings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    local opts = { buffer = true, silent = true }
+    
+    -- Go build and run
+    keymap("n", "<leader>gb", ":GoBuild<CR>", opts)
+    keymap("n", "<leader>gr", ":GoRunProject<CR>", opts) -- Usar comando personalizado
+    keymap("n", "<leader>gt", ":GoTest<CR>", opts)
+    keymap("n", "<leader>gtf", ":GoTestFunc<CR>", opts)
+    keymap("n", "<leader>gtp", ":GoTestPkg<CR>", opts)
+    
+    -- Go formatting and imports
+    keymap("n", "<leader>gf", ":GoFmt<CR>", opts)
+    keymap("n", "<leader>gi", ":GoImport<CR>", opts)
+    keymap("n", "<leader>gim", ":GoImports<CR>", opts)
+    
+    -- Go debugging
+    keymap("n", "<leader>gdt", ":GoDebugTest<CR>", opts)
+    keymap("n", "<leader>gdb", ":GoDebugBreakpoint<CR>", opts)
+    
+    -- Go coverage
+    keymap("n", "<leader>gcov", ":GoCoverage<CR>", opts)
+    keymap("n", "<leader>gcot", ":GoCoverageToggle<CR>", opts)
+    
+    -- Go tools
+    keymap("n", "<leader>gta", ":GoAddTag<CR>", opts)
+    keymap("n", "<leader>gtr", ":GoRmTag<CR>", opts)
+    keymap("n", "<leader>gif", ":GoIfErr<CR>", opts)
+    
+    -- Go project configuration
+    keymap("n", "<leader>gcc", ":GoCreateConfig<CR>", opts)
+    keymap("n", "<leader>gcl", ":GoListConfigs<CR>", opts)
+    keymap("n", "<leader>grp", ":GoRunProject<CR>", opts)
+  end,
+})

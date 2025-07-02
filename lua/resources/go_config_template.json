@@ -1,0 +1,63 @@
+{
+  "configurations": [
+    {
+      "name": "Main Application",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": ".",
+      "args": [],
+      "env": {},
+      "description": "Executa a aplicação principal na raiz do projeto"
+    },
+    {
+      "name": "API Server",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "./cmd/api",
+      "args": ["--port", "8080", "--env", "development"],
+      "env": {
+        "ENV": "development",
+        "PORT": "8080",
+        "LOG_LEVEL": "debug"
+      },
+      "description": "Inicia o servidor API em modo desenvolvimento"
+    },
+    {
+      "name": "CLI Tool",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "./cmd/cli",
+      "args": ["--help"],
+      "env": {},
+      "description": "Executa a ferramenta CLI com opção de ajuda"
+    },
+    {
+      "name": "Worker Service",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "./cmd/worker",
+      "args": ["--queue", "default", "--workers", "4"],
+      "env": {
+        "WORKER_TIMEOUT": "30s",
+        "REDIS_URL": "redis://localhost:6379"
+      },
+      "description": "Inicia o serviço de worker com configurações específicas"
+    },
+    {
+      "name": "Migration Tool",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "./cmd/migrate",
+      "args": ["up"],
+      "env": {
+        "DATABASE_URL": "postgres://user:pass@localhost/dbname?sslmode=disable"
+      },
+      "description": "Executa migrações do banco de dados"
+    }
+  ]
+}
