@@ -82,6 +82,7 @@ function M.setup()
   require("config.dap.dart").setup()
   require("config.dap.spring-boot")
   require("config.dap.flutter-runner")
+  require("config.dap.go")
 
   vim.keymap.set("n", "<F5>", function() dap.continue() end, { silent = true })
   vim.keymap.set("n", "<F10>", function() dap.step_over() end, { silent = true })

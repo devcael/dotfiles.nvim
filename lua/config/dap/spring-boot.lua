@@ -43,13 +43,11 @@ function M.run_spring_boot_interactive()
   local profiles = utils.get_spring_profiles()
   local java_versions = get_available_java_versions()
   
-  -- Selecionar perfil
   vim.ui.select(profiles, {
     prompt = "Selecione o perfil Spring:",
   }, function(profile)
     if not profile then return end
     
-    -- Selecionar versão do Java
     local java_items = {}
     for i, version in ipairs(java_versions) do
       table.insert(java_items, string.format("%d. %s", i, version.name))
@@ -60,7 +58,6 @@ function M.run_spring_boot_interactive()
     }, function(java_choice, java_idx)
       if not java_choice or not java_idx then return end
       
-      -- Selecionar modo
       vim.ui.select({"Normal", "Debug"}, {
         prompt = "Modo de execução:",
       }, function(mode)
@@ -103,7 +100,6 @@ function M.create_launch_json()
     configurations = {}
   }
   
-  -- Configuração para attach
   table.insert(launch_config.configurations, {
     type = "java",
     name = "Debug (Attach) - Spring Boot",
@@ -113,7 +109,6 @@ function M.create_launch_json()
     projectName = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
   })
   
-  -- Configuração para launch
   for _, version in ipairs(java_versions) do
     table.insert(launch_config.configurations, {
       type = "java",
@@ -141,7 +136,6 @@ function M.create_launch_json()
   end
 end
 
--- Comandos úteis
 vim.api.nvim_create_user_command("SpringBootRun", function()
   M.run_spring_boot_interactive()
 end, { desc = "Executar Spring Boot interativamente" })
@@ -158,7 +152,6 @@ vim.api.nvim_create_user_command("SpringBootLaunchJson", function()
   M.create_launch_json()
 end, { desc = "Criar launch.json para Spring Boot" })
 
--- Mapeamentos
 vim.keymap.set("n", "<F9>", M.run_spring_boot_interactive, { desc = "Spring Boot: Execução interativa" })
 vim.keymap.set("n", "<C-F9>", function() M.run_spring_boot_quick(false) end, { desc = "Spring Boot: Execução rápida" })
 vim.keymap.set("n", "<C-F12>", function() M.run_spring_boot_quick(true) end, { desc = "Spring Boot: Debug rápido" })

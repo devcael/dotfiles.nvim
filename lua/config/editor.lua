@@ -27,6 +27,19 @@ vim.diagnostic.config({
   underline = false,
 })
 
+function ReloadConfig()
+  for name,_ in pairs(package.loaded) do
+    if name:match("^user") or name:match("^plugins") then
+      package.loaded[name] = nil
+    end
+  end
+
+  dofile(vim.env.MYVIMRC)
+  print("Configuração recarregada!")
+end
+
+vim.api.nvim_create_user_command("ReloadConfig", ReloadConfig, {})
+
 require("resources.theme_utils").set_background_transparent()
 
 

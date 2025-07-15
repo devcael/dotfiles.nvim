@@ -235,19 +235,16 @@ function M.quick_debug_attach()
 end
 
 function M.restart_spring_boot()
-  -- Mata processos Java existentes relacionados ao Spring Boot
   vim.ui.select({"Sim", "Não"}, {
     prompt = "Reiniciar Spring Boot? (Isso irá matar processos Java ativos)",
   }, function(choice)
     if choice == "Sim" then
-      -- No Windows, usar taskkill para matar processos Java
       if utils.os().IS_WINDOWS then
         vim.cmd("!taskkill /F /IM java.exe")
       else
         vim.cmd("!pkill -f 'spring-boot'")
       end
       
-      -- Aguardar um pouco e iniciar novamente
       vim.defer_fn(function()
         require("config.dap.spring-boot").run_spring_boot_quick(false)
       end, 2000)
@@ -262,10 +259,8 @@ function M.flutter_debug()
     return
   end
   
-  -- Iniciar Flutter em modo debug e depois conectar o debugger
   require("config.dap.flutter-runner").run_flutter_quick("debug")
   
-  -- Aguardar um pouco e tentar conectar o debugger
   vim.defer_fn(function()
     local dap = require("dap")
     dap.run({
@@ -335,10 +330,10 @@ vim.api.nvim_create_user_command("DevRestart", function()
 end, { desc = "Reiniciar Spring Boot" })
 
 -- Mapeamentos principais
-vim.keymap.set("n", "<leader>dt", show_dev_menu, { desc = "Dev Tools: Menu principal" })
-vim.keymap.set("n", "<leader>ds", M.show_project_status, { desc = "Dev Tools: Status do projeto" })
-vim.keymap.set("n", "<leader>de", M.configure_env_vars, { desc = "Dev Tools: Configurar .env" })
-vim.keymap.set("n", "<leader>da", M.quick_debug_attach, { desc = "Dev Tools: Debug attach rápido" })
-vim.keymap.set("n", "<leader>dr", M.restart_spring_boot, { desc = "Dev Tools: Reiniciar Spring Boot" })
+-- vim.keymap.set("n", "<leader>dt", show_dev_menu, { desc = "Dev Tools: Menu principal" })
+-- vim.keymap.set("n", "<leader>ds", M.show_project_status, { desc = "Dev Tools: Status do projeto" })
+-- vim.keymap.set("n", "<leader>de", M.configure_env_vars, { desc = "Dev Tools: Configurar .env" })
+-- vim.keymap.set("n", "<leader>da", M.quick_debug_attach, { desc = "Dev Tools: Debug attach rápido" })
+-- vim.keymap.set("n", "<leader>dr", M.restart_spring_boot, { desc = "Dev Tools: Reiniciar Spring Boot" })
 
 return M

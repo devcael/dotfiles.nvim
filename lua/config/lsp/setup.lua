@@ -106,12 +106,24 @@ require("mason-lspconfig").setup_handlers {
       }
     })
   end,
+
+  ["gopls"] = function()
+    lspconfig.gopls.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = on_attach,
+      settings = require("config.lsp.servers.gopls").settings,
+      filetypes = { "go", "gomod", "gowork", "gotmpl" },
+      root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+    })
+  end,
 }
 
 require("mason-registry").refresh(function()
   local debug_adapters = {
     "node-debug2-adapter",
     "chrome-debug-adapter",
+    "delve", -- Go debugger
   }
   
   for _, adapter in ipairs(debug_adapters) do
