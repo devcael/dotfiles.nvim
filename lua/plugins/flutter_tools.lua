@@ -7,6 +7,9 @@ return {
       'stevearc/dressing.nvim',
     },
     config = function()
+
+      local capabilities = require("config.lsp.commom").capabilities
+
       require('flutter-tools').setup({
         ui = {
           border = "rounded",
@@ -75,13 +78,16 @@ return {
           on_attach = function(client, bufnr)
             -- Configurações específicas do LSP Flutter
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
+
+            local has_lsp_config, lsp_config = pcall(require, "config.lsp.commom")
+            if has_lsp_config and lsp_config.on_attach then
+               lsp_config.on_attach(client, bufnr)
+            end
+
             vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
           end,
-          capabilities = function(config)
-            config.textDocument.completion.completionItem.snippetSupport = true
-            return config
-          end,
+          capabilities = capabilities,
           settings = {
             showTodos = true,
             completeFunctionCalls = true,
