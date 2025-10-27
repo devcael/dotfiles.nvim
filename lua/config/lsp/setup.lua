@@ -64,7 +64,7 @@ require("mason-lspconfig").setup_handlers {
     })
   end,
 
-  ["ts_ls"] = function()
+  ["vtsls"] = function()
     lspconfig.ts_ls.setup({
       capabilities = capabilities,
       on_attach = on_attach,
