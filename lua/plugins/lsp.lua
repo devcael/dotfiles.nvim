@@ -1,2 +1,33 @@
-local file_utils = require('resources.exec_files')
-file_utils.exec_project_folder('plugins/servers_setups')
+return {
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      "mason.nvim",
+      "williamboman/mason-lspconfig.nvim"
+    },
+    lazy = false
+  },
+  {
+  "williamboman/mason-lspconfig.nvim",
+   dependencies = {
+      "mason.nvim",
+    },
+    lazy = false,
+  },
+  {
+    "williamboman/mason.nvim",
+    lazy = false,
+    config = function()
+      require("mason").setup({
+          ui = {
+            icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗"
+            }
+          }
+        })   
+    end
+  }
+}
+
