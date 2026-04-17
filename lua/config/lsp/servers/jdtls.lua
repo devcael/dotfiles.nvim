@@ -1,5 +1,7 @@
 local utils = require("resources.utils")
 
+local cache_vars = {}
+
 local function get_referenced_jars(path)
   local jars = vim.split(vim.fn.glob(path), '\n', { trimempty = true })
   for i, jar in ipairs(jars) do
@@ -139,8 +141,6 @@ local java_path = find_java_path()
 
 local java_cmds = vim.api.nvim_create_augroup("java_cmds", { clear = true })
 
-local cache_vars = {}
-
 local root_files = {
     ".git",
     "mvnw",
@@ -219,9 +219,33 @@ local function enable_codelens(bufnr)
     })
 end
 
+local function is_quarkus_project()
+    local cwd = vim.fn.getcwd()
+    local pom = cwd .. "/pom.xml"
+    if vim.fn.filereadable(pom) == 1 then
+        local content = table.concat(vim.fn.readfile(pom), "\n")
+        if content:find("quarkus") then
+            return true
+        end
+    end
+    local gradle = cwd .. "/build.gradle"
+    if vim.fn.filereadable(gradle) == 1 then
+        local content = table.concat(vim.fn.readfile(gradle), "\n")
+        if content:find("quarkus") then
+            return true
+        end
+    end
+    return false
+end
+
 local function enable_debugger(bufnr)
     require("jdtls").setup_dap({ hotcodereplace = "auto" })
-    require("jdtls.dap").setup_dap_main_class_configs()
+    -- Quarkus has no traditional main class; defer + pcall to avoid LSP-not-ready error
+    if not is_quarkus_project() then
+        vim.defer_fn(function()
+            pcall(require("jdtls.dap").setup_dap_main_class_configs)
+        end, 1000)
+    end
     local opts = { buffer = bufnr }
     vim.keymap.set("n", "<leader>df", "<cmd>lua require('jdtls').test_class()<cr>", opts)
     vim.keymap.set("n", "<leader>dn", "<cmd>lua require('jdtls').test_nearest_method()<cr>", opts)
