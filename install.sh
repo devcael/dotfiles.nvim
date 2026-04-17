@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Neovim Dotfiles - Setup Script
-# Suporte: Debian / Ubuntu (e derivados)
+# Suporte: Debian / Ubuntu (e derivados) · Arch Linux (e derivados)
 # =============================================================================
 
 set -euo pipefail
@@ -119,8 +119,17 @@ version_gte() {
   printf '%s\n%s\n' "$2" "$1" | sort -V -C
 }
 
-is_debian_based() {
-  command_exists apt-get || fail "Este script requer apt-get (Debian/Ubuntu)."
+DISTRO_FAMILY=""
+
+detect_distro() {
+  if command_exists apt-get; then
+    DISTRO_FAMILY="debian"
+  elif command_exists pacman; then
+    DISTRO_FAMILY="arch"
+  else
+    fail "Distro não suportada. Requer apt-get (Debian/Ubuntu) ou pacman (Arch)."
+  fi
+  log "DISTRO_FAMILY: $DISTRO_FAMILY"
 }
 
 require_sudo() {
@@ -135,9 +144,57 @@ require_sudo() {
 }
 
 apt_install() {
-  # Loga stdout+stderr; não usa /dev/null para preservar diagnóstico
   log "apt-get install: $*"
   $SUDO apt-get install -y --no-install-recommends "$@" >> "$LOG_FILE" 2>&1
+}
+
+pacman_install() {
+  log "pacman -S: $*"
+  $SUDO pacman -S --noconfirm --needed "$@" >> "$LOG_FILE" 2>&1
+}
+
+# Mapeamento de nomes de pacotes: chave=nome debian, valor=nome arch
+declare -A _ARCH_PKG_MAP=(
+  [build-essential]="base-devel"
+  [python3-pip]="python-pip"
+  [libfuse2]="fuse2"
+  [fuse]="fuse2"
+  [apt-transport-https]=""           # não existe no arch
+  [software-properties-common]=""    # não existe no arch
+  [openjdk-17-jdk]="jdk17-openjdk"
+  [libgtk-3-dev]="gtk3"
+  [libblkid-dev]="util-linux"
+  [liblzma-dev]="xz"
+  [libglu1-mesa]="glu"
+  [ninja-build]="ninja"
+)
+
+# Resolve nome do pacote para a distro atual
+resolve_pkg() {
+  local pkg="$1"
+  if [[ "$DISTRO_FAMILY" == "arch" ]]; then
+    echo "${_ARCH_PKG_MAP[$pkg]:-$pkg}"
+  else
+    echo "$pkg"
+  fi
+}
+
+# Instala pacote usando o gerenciador da distro
+pkg_install() {
+  if [[ "$DISTRO_FAMILY" == "arch" ]]; then
+    pacman_install "$@"
+  else
+    apt_install "$@"
+  fi
+}
+
+# Verifica se pacote já está instalado
+pkg_installed() {
+  if [[ "$DISTRO_FAMILY" == "arch" ]]; then
+    pacman -Q "$1" &>/dev/null 2>&1
+  else
+    dpkg -s "$1" &>/dev/null 2>&1
+  fi
 }
 
 # Extrai a última mensagem de erro do log (útil para track_fail)
@@ -153,7 +210,7 @@ echo -e "${BOLD}${BLUE}  Neovim Dotfiles — Setup${RESET}"
 echo -e "  Log: ${CYAN}$LOG_FILE${RESET}"
 echo ""
 
-is_debian_based
+detect_distro
 require_sudo
 
 if [[ -f /etc/os-release ]]; then
@@ -214,7 +271,11 @@ done
 header "1/8 — Dependências base do sistema"
 
 info "Atualizando lista de pacotes..."
-run_spin "Atualizando apt" $SUDO apt-get update -qq
+if [[ "$DISTRO_FAMILY" == "arch" ]]; then
+  run_spin "Atualizando pacman" $SUDO pacman -Sy --noconfirm
+else
+  run_spin "Atualizando apt" $SUDO apt-get update -qq
+fi
 
 BASE_PKGS=(
   git curl wget unzip tar gzip
@@ -230,22 +291,33 @@ BASE_PKGS=(
 OPTIONAL_SYS_PKGS=(software-properties-common)
 
 for pkg in "${BASE_PKGS[@]}"; do
-  if dpkg -s "$pkg" &>/dev/null 2>&1; then
-    track_skip "$pkg"
+  local_pkg=$(resolve_pkg "$pkg")
+  if [[ -z "$local_pkg" ]]; then
+    info "$pkg não aplicável nesta distro — pulando."
+    log "SKIP_DISTRO: $pkg"
+    continue
+  fi
+  if pkg_installed "$local_pkg"; then
+    track_skip "$local_pkg"
   else
-    run_spin "Instalando $pkg" apt_install "$pkg" \
-      && track_ok "$pkg" \
-      || track_fail "$pkg" "$(last_log_error)"
+    run_spin "Instalando $local_pkg" pkg_install "$local_pkg" \
+      && track_ok "$local_pkg" \
+      || track_fail "$local_pkg" "$(last_log_error)"
   fi
 done
 
 for pkg in "${OPTIONAL_SYS_PKGS[@]}"; do
-  if dpkg -s "$pkg" &>/dev/null 2>&1; then
-    track_skip "$pkg"
+  local_pkg=$(resolve_pkg "$pkg")
+  if [[ -z "$local_pkg" ]]; then
+    log "SKIP_DISTRO_OPT: $pkg"
+    continue
+  fi
+  if pkg_installed "$local_pkg"; then
+    track_skip "$local_pkg"
   else
-    run_spin "Instalando $pkg (opcional)" apt_install "$pkg" \
-      && track_ok "$pkg" \
-      || { warn "$pkg não pôde ser instalado — não é crítico, continuando."; log "SKIP_OPT: $pkg"; }
+    run_spin "Instalando $local_pkg (opcional)" pkg_install "$local_pkg" \
+      && track_ok "$local_pkg" \
+      || { warn "$local_pkg não pôde ser instalado — não é crítico, continuando."; log "SKIP_OPT: $local_pkg"; }
   fi
 done
 
@@ -289,9 +361,9 @@ if command_exists rg; then
   track_skip "ripgrep ($(rg --version | head -1))"
 else
   info "Instalando ripgrep..."
-  if run_spin "Instalando ripgrep" apt_install ripgrep; then
+  if run_spin "Instalando ripgrep" pkg_install ripgrep; then
     track_ok "ripgrep ($(rg --version | head -1))"
-  else
+  elif [[ "$DISTRO_FAMILY" == "debian" ]]; then
     warn "apt falhou — tentando via GitHub releases..."
     log "Fallback: ripgrep via GitHub"
     RG_TAG=$(curl -fsSL https://api.github.com/repos/BurntSushi/ripgrep/releases/latest \
@@ -302,6 +374,8 @@ else
     $SUDO dpkg -i "$TMP_RG" >> "$LOG_FILE" 2>&1 && track_ok "ripgrep $RG_TAG" \
       || track_fail "ripgrep" "$(last_log_error)"
     rm -f "$TMP_RG"
+  else
+    track_fail "ripgrep" "$(last_log_error)"
   fi
 fi
 
@@ -313,11 +387,16 @@ header "4/8 — Node.js + npm"
 NODE_MIN="18"
 
 install_nodejs() {
-  info "Adicionando repositório NodeSource (LTS)..."
-  run_spin "Configurando repositório NodeSource" \
-    bash -c 'curl -fsSL https://deb.nodesource.com/setup_lts.x | '"$SUDO"' bash -'
-  run_spin "Instalando Node.js" apt_install nodejs
-  track_ok "node.js ($(node --version))"
+  if [[ "$DISTRO_FAMILY" == "arch" ]]; then
+    run_spin "Instalando Node.js" pacman_install nodejs npm
+    track_ok "node.js ($(node --version))"
+  else
+    info "Adicionando repositório NodeSource (LTS)..."
+    run_spin "Configurando repositório NodeSource" \
+      bash -c 'curl -fsSL https://deb.nodesource.com/setup_lts.x | '"$SUDO"' bash -'
+    run_spin "Instalando Node.js" apt_install nodejs
+    track_ok "node.js ($(node --version))"
+  fi
 }
 
 if command_exists node; then
@@ -432,21 +511,23 @@ if $WITH_JAVA; then
       track_skip "java (versão $JAVA_VER)"
     else
       warn "Java $JAVA_VER < 11 — instalando JDK 17..."
-      run_spin "Instalando openjdk-17-jdk" apt_install openjdk-17-jdk \
-        && track_ok "openjdk-17-jdk" \
-        || track_fail "openjdk-17-jdk" "$(last_log_error)"
+      _java_pkg=$(resolve_pkg openjdk-17-jdk)
+      run_spin "Instalando $_java_pkg" pkg_install "$_java_pkg" \
+        && track_ok "$_java_pkg" \
+        || track_fail "$_java_pkg" "$(last_log_error)"
     fi
   else
     info "Instalando OpenJDK 17..."
-    run_spin "Instalando openjdk-17-jdk" apt_install openjdk-17-jdk \
-      && track_ok "openjdk-17-jdk" \
-      || track_fail "openjdk-17-jdk" "$(last_log_error)"
+    _java_pkg=$(resolve_pkg openjdk-17-jdk)
+    run_spin "Instalando $_java_pkg" pkg_install "$_java_pkg" \
+      && track_ok "$_java_pkg" \
+      || track_fail "$_java_pkg" "$(last_log_error)"
   fi
 
   if command_exists mvn; then
     track_skip "maven ($(mvn --version | head -1))"
   else
-    run_spin "Instalando Maven" apt_install maven \
+    run_spin "Instalando Maven" pkg_install maven \
       && track_ok "maven" \
       || track_fail "maven" "$(last_log_error)"
   fi
@@ -475,12 +556,14 @@ FLUTTER_DIR="$HOME/development/flutter"
 if $WITH_FLUTTER; then
   FLUTTER_DEPS=(libgtk-3-dev libblkid-dev liblzma-dev libglu1-mesa clang cmake ninja-build pkg-config)
   for dep in "${FLUTTER_DEPS[@]}"; do
-    if dpkg -s "$dep" &>/dev/null 2>&1; then
-      track_skip "$dep"
+    local_dep=$(resolve_pkg "$dep")
+    [[ -z "$local_dep" ]] && { log "SKIP_DISTRO: $dep"; continue; }
+    if pkg_installed "$local_dep"; then
+      track_skip "$local_dep"
     else
-      run_spin "Instalando $dep" apt_install "$dep" \
-        && track_ok "$dep" \
-        || track_fail "$dep" "$(last_log_error)"
+      run_spin "Instalando $local_dep" pkg_install "$local_dep" \
+        && track_ok "$local_dep" \
+        || track_fail "$local_dep" "$(last_log_error)"
     fi
   done
 
