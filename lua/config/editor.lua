@@ -20,7 +20,7 @@ vim.opt.fillchars:append({ eob = " " })
 vim.opt.cursorline = true
 vim.opt.guicursor = "n-v-c:block,i:ver25,r:hor20,o:hor50"
 
-vim.opt.clipboard:append("unnamed")
+vim.opt.clipboard:append("unnamedplus")
 
 vim.diagnostic.config({
   virtual_text = false,
