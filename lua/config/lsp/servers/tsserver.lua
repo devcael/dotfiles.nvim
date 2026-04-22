@@ -2,21 +2,17 @@ local command = require("config.utils.command_utils")
 
 local M = {}
 
-local get_ts_lib_path = function()
+local get_vue_plugin_path = function()
   local node_modules = command.run("npm root -g")
-  local vue_lib =  "/@vue/typescript-plugin";
-  local lib_path = node_modules .. vue_lib
-
+  local lib_path = node_modules .. "/@vue/typescript-plugin"
   if command.path_exists(lib_path) then
     return lib_path
   end
 end
 
-local get_vue_lib_path = function()
+local get_tsdk_path = function()
   local node_modules = command.run("npm root -g")
-  local ts_lib =  "/typescript/lib";
-  local lib_path = node_modules .. ts_lib
-
+  local lib_path = node_modules .. "/typescript/lib"
   if command.path_exists(lib_path) then
     return lib_path
   end
@@ -75,8 +71,8 @@ end
 M.handlers = handlers
 M.settings = settings
 M.on_attach = on_attach
-M.get_tsdk = get_ts_lib_path
-M.get_vue_lib_path = get_vue_lib_path
+M.get_tsdk = get_tsdk_path
+M.get_vue_plugin_path = get_vue_plugin_path
 
 return M
 

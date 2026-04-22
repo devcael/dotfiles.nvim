@@ -23,7 +23,7 @@ M.init_options = {
     },
     stylusSupremacy = {},
     typescript = {
-      tsdk = tsserver.get_tsdk,
+      tsdk = tsserver.get_tsdk(),
       format = {
       },
     },

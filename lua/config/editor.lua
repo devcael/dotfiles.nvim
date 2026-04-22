@@ -28,7 +28,7 @@ vim.diagnostic.config({
 })
 
 function ReloadConfig()
-  for name,_ in pairs(package.loaded) do
+  for name, _ in pairs(package.loaded) do
     if name:match("^user") or name:match("^plugins") then
       package.loaded[name] = nil
     end
@@ -40,7 +40,6 @@ end
 
 vim.api.nvim_create_user_command("ReloadConfig", ReloadConfig, {})
 
-require("resources.theme_utils").set_background_transparent()
+-- require("resources.theme_utils").set_background_transparent()
 
-
-
+require("resources.theme_utils").set_background_normal()

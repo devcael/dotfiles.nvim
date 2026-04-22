@@ -4,11 +4,11 @@ return {
   lazy = false,
   priority = 1000,
   config = function()
-    require("neosolarized").setup({
-      comment_italics = false,
-      background_set = false,
-    })
-    vim.cmd.colorscheme("neosolarized")
+    -- require("neosolarized").setup({
+    --   comment_italics = false,
+    --   background_set = false,
+    -- })
+    -- vim.cmd.colorscheme("neosolarized")
   end,
   dependencies = {
     "tjdevries/colorbuddy.nvim",
