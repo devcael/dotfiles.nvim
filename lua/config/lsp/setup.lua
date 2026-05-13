@@ -1,5 +1,5 @@
 local util = require("lspconfig.util")
-local lspconfig = require("lspconfig")
+local lspconfig = vim.lsp
 
 local on_attach = require("config.lsp.commom").on_attach
 local capabilities = require("config.lsp.commom").capabilities
@@ -20,15 +20,14 @@ require("mason-lspconfig").setup({
   automatic_enable = false,
 })
 
--- Global defaults for all servers
 vim.lsp.config("*", {
   on_attach = on_attach,
   capabilities = capabilities,
   handlers = handlers,
+  root_markers = { '.git' },
 })
 
--- vtsls with Vue support
-lspconfig.vtsls.setup({
+vim.lsp.config('vtsls', {
   capabilities = capabilities,
   on_attach = on_attach,
   handlers = handlers,
@@ -59,23 +58,16 @@ lspconfig.vtsls.setup({
   },
 })
 
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  settings = require("config.lsp.servers.lua_ls").settings,
-})
+vim.lsp.config("lua_ls",
+  {
+    capabilities = capabilities,
+    handlers = handlers,
+    on_attach = on_attach,
+    settings = require("config.lsp.servers.lua_ls").settings,
+  }
+)
 
-lspconfig.gopls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  settings = require("config.lsp.servers.gopls").settings,
-  filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-})
-
-lspconfig.dartls.setup({
+vim.lsp.config("dartls", {
   on_attach = on_attach,
   capabilities = capabilities,
   handlers = handlers,
@@ -89,33 +81,46 @@ lspconfig.dartls.setup({
   },
 })
 
-local cssls = require("config.lsp.servers.cssls")
-lspconfig.cssls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  filetypes = cssls.filetypes,
-  settings = cssls.settings,
-})
+-- lspconfig.gopls.setup({
+--   capabilities = capabilities,
+--   handlers = handlers,
+--   on_attach = on_attach,
+--   settings = require("config.lsp.servers.gopls").settings,
+--   filetypes = { "go", "gomod", "gowork", "gotmpl" },
+--   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+-- })
+--
+-- local cssls = require("config.lsp.servers.cssls")
+-- lspconfig.cssls.setup({
+--   capabilities = capabilities,
+--   handlers = handlers,
+--   on_attach = on_attach,
+--   filetypes = cssls.filetypes,
+--   settings = cssls.settings,
+-- })
+--
+-- local html = require("config.lsp.servers.html")
+-- lspconfig.html.setup({
+--   capabilities = capabilities,
+--   handlers = handlers,
+--   on_attach = on_attach,
+--   filetypes = html.filetypes,
+--   init_options = html.init_options,
+-- })
+--
+-- local tailwindcss = require("config.lsp.servers.tailwindcss")
+-- lspconfig.tailwindcss.setup({
+--   capabilities = capabilities,
+--   handlers = handlers,
+--   on_attach = on_attach,
+--   filetypes = tailwindcss.filetypes,
+--   settings = tailwindcss.settings,
+--   root_dir = util.root_pattern(unpack(tailwindcss.root_dir_pattern)),
+-- })
+--
 
-local html = require("config.lsp.servers.html")
-lspconfig.html.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  filetypes = html.filetypes,
-  init_options = html.init_options,
-})
-
-local tailwindcss = require("config.lsp.servers.tailwindcss")
-lspconfig.tailwindcss.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  filetypes = tailwindcss.filetypes,
-  settings = tailwindcss.settings,
-  root_dir = util.root_pattern(unpack(tailwindcss.root_dir_pattern)),
-})
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("dartls")
 
 require("mason-registry").refresh(function()
   local debug_adapters = {

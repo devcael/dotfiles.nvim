@@ -15,6 +15,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.g.mapleader = " "
 vim.o.scrolloff = 999 -- Um valor muito alto
+vim.opt.updatetime = 300
 vim.opt.fillchars:append({ eob = " " })
 
 vim.opt.cursorline = true
@@ -24,7 +25,13 @@ vim.opt.clipboard:append("unnamedplus")
 
 vim.diagnostic.config({
   virtual_text = false,
-  underline = false,
+  underline = true,
+})
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focusable = false })
+  end,
 })
 
 function ReloadConfig()
