@@ -7,7 +7,6 @@ return {
       'stevearc/dressing.nvim',
     },
     config = function()
-
       local capabilities = require("config.lsp.commom").capabilities
 
       require('flutter-tools').setup({
@@ -77,11 +76,11 @@ return {
           },
           on_attach = function(client, bufnr)
             -- Configurações específicas do LSP Flutter
-            local bufopts = { noremap=true, silent=true, buffer=bufnr }
+            local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
             local has_lsp_config, lsp_config = pcall(require, "config.lsp.commom")
             if has_lsp_config and lsp_config.on_attach then
-               lsp_config.on_attach(client, bufnr)
+              lsp_config.on_attach(client, bufnr)
             end
 
             vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
@@ -102,7 +101,7 @@ return {
           }
         }
       })
-      
+
       -- Comandos adicionais do Flutter Tools
       vim.keymap.set("n", "<leader>Fc", "<cmd>Telescope flutter commands<cr>", { desc = "Flutter: Commands" })
       vim.keymap.set("n", "<leader>Fo", "<cmd>FlutterOutlineToggle<cr>", { desc = "Flutter: Outline" })

@@ -6,7 +6,7 @@ return {
     opts = {},
     config = function()
       require("solarized-osaka").setup({
-        transparent = false,
+        transparent = true,
         terminal_colors = true,
         styles = {
           comments = { italic = true },
@@ -26,8 +26,6 @@ return {
 
         on_highlights = function(highlights, colors) end,
       })
-
-      vim.cmd.colorscheme "solarized-osaka"
     end
   }
 }

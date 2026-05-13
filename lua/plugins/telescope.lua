@@ -65,6 +65,23 @@ return {
 
       -- Git
       vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Git Status' })
+
+      require('telescope').setup {
+        defaults = {
+          layout_strategy = 'flex',
+          layout_config = {
+            horizontal = {
+              preview_width = 0.5, -- Define que o preview ocupa 50% da largura
+            },
+            vertical = {
+              preview_height = 0.5,
+            },
+            flex = {
+              flip_columns = 120, -- Muda para vertical se a largura for menor que 120 colunas
+            },
+          },
+        },
+      }
     end
   }
 }

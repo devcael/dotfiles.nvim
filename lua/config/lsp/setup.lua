@@ -27,11 +27,13 @@ vim.lsp.config("*", {
   root_markers = { '.git' },
 })
 
-vim.lsp.config('vtsls', {
+vim.lsp.config("vtsls", {
+  cmd = { "vtsls", "--stdio" },
   capabilities = capabilities,
   on_attach = on_attach,
   handlers = handlers,
-  root_dir = util.root_pattern("package.json"),
+  -- root_dir = util.root_pattern("package.json"),
+  root_markers = { "package.json", ".git" },
   filetypes = {
     "javascript",
     "typescript",
@@ -68,11 +70,12 @@ vim.lsp.config("lua_ls",
 )
 
 vim.lsp.config("dartls", {
+  cmd = { "flutter", "--stdio" },
   on_attach = on_attach,
   capabilities = capabilities,
   handlers = handlers,
   filetypes = { "dart" },
-  root_dir = util.root_pattern("pubspec.yaml", "analysis_options.yaml"),
+  root_markers = { "pubspec.yaml", "analysis_options.yaml" },
   init_options = {
     closingLabels = true,
     flutterOutline = true,
@@ -90,37 +93,43 @@ vim.lsp.config("dartls", {
 --   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 -- })
 --
--- local cssls = require("config.lsp.servers.cssls")
--- lspconfig.cssls.setup({
---   capabilities = capabilities,
---   handlers = handlers,
---   on_attach = on_attach,
---   filetypes = cssls.filetypes,
---   settings = cssls.settings,
--- })
---
--- local html = require("config.lsp.servers.html")
--- lspconfig.html.setup({
---   capabilities = capabilities,
---   handlers = handlers,
---   on_attach = on_attach,
---   filetypes = html.filetypes,
---   init_options = html.init_options,
--- })
---
--- local tailwindcss = require("config.lsp.servers.tailwindcss")
--- lspconfig.tailwindcss.setup({
---   capabilities = capabilities,
---   handlers = handlers,
---   on_attach = on_attach,
---   filetypes = tailwindcss.filetypes,
---   settings = tailwindcss.settings,
---   root_dir = util.root_pattern(unpack(tailwindcss.root_dir_pattern)),
--- })
---
+local cssls = require("config.lsp.servers.cssls")
+
+vim.lsp.config("cssls", {
+  capabilities = capabilities,
+  handlers = handlers,
+  on_attach = on_attach,
+  filetypes = cssls.filetypes,
+  settings = cssls.settings,
+})
+
+
+local html = require("config.lsp.servers.html")
+vim.lsp.config("html", {
+  capabilities = capabilities,
+  handlers = handlers,
+  on_attach = on_attach,
+  filetypes = html.filetypes,
+  init_options = html.init_options,
+})
+
+local tailwindcss = require("config.lsp.servers.tailwindcss")
+
+vim.lsp.config("tailwindcss", {
+  capabilities = capabilities,
+  handlers = handlers,
+  on_attach = on_attach,
+  filetypes = tailwindcss.filetypes,
+  settings = tailwindcss.settings,
+  root_dir = util.root_pattern(unpack(tailwindcss.root_dir_pattern)),
+})
 
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("dartls")
+vim.lsp.enable("vtsls")
+vim.lsp.enable("tailwindcss")
+vim.lsp.enable("html")
+vim.lsp.enable("cssls")
 
 require("mason-registry").refresh(function()
   local debug_adapters = {
