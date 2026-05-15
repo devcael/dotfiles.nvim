@@ -58,6 +58,7 @@ return {
       vim.keymap.set('n', '<leader>ws', builtin.lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols' })
 
       vim.keymap.set('n', '<C-F12>', builtin.lsp_document_symbols, { desc = 'Document Symbols' })
+      vim.keymap.set('n', '<leader>ds', builtin.lsp_document_symbols, { desc = 'Document Symbols' })
 
       -- LSP e Navegação
       vim.keymap.set('n', 'gr', builtin.lsp_references, { desc = 'Ir para Referências' })
@@ -65,6 +66,12 @@ return {
 
       -- Git
       vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Git Status' })
+
+      vim.keymap.set("n", "<leader>ut", function()
+          require("telescope.builtin").colorscheme({
+            enable_preview = true,
+          })
+        end, { desc = "Selecionar tema" })
 
       require('telescope').setup {
         defaults = {

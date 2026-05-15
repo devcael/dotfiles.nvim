@@ -89,8 +89,8 @@ function show_diagnostics()
 end
 
 -- Desabilitar e habilitar os diagnostics
-vim.keymap.set("n", "<leader>dh", hide_diagnostics)
-vim.keymap.set("n", "<leader>ds", show_diagnostics)
+-- vim.keymap.set("n", "<leader>dh", hide_diagnostics)
+-- vim.keymap.set("n", "<leader>ds", show_diagnostics)
 
 -- Salvar arquivo com Ctrl + S
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
