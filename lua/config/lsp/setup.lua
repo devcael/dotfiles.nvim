@@ -5,11 +5,8 @@ local on_attach = require("config.lsp.commom").on_attach
 local capabilities = require("config.lsp.commom").capabilities
 
 local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    silent = true,
-    border = "rounded",
-  }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+  ["textDocument/hover"] =  vim.lsp.buf.hover({ border = 'rounded', silent = true }),
+  ["textDocument/signatureHelp"] = vim.lsp.buf.signature_help({ border = "rounded" })
 }
 
 require("mason").setup({
