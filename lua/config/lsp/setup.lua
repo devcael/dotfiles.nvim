@@ -5,7 +5,7 @@ local on_attach = require("config.lsp.commom").on_attach
 local capabilities = require("config.lsp.commom").capabilities
 
 local handlers = {
-  ["textDocument/hover"] =  vim.lsp.buf.hover({ border = 'rounded', silent = true }),
+  ["textDocument/hover"] = vim.lsp.buf.hover({ border = 'rounded', silent = true }),
   ["textDocument/signatureHelp"] = vim.lsp.buf.signature_help({ border = "rounded" })
 }
 
@@ -59,7 +59,9 @@ vim.lsp.config("vtsls", {
 
 vim.lsp.config("lua_ls",
   {
+    cmd = { "lua-language-server" },
     capabilities = capabilities,
+    filetypes = { "lua" },
     handlers = handlers,
     on_attach = on_attach,
     settings = require("config.lsp.servers.lua_ls").settings,
@@ -81,15 +83,16 @@ vim.lsp.config("dartls", {
   },
 })
 
--- lspconfig.gopls.setup({
---   capabilities = capabilities,
---   handlers = handlers,
---   on_attach = on_attach,
---   settings = require("config.lsp.servers.gopls").settings,
---   filetypes = { "go", "gomod", "gowork", "gotmpl" },
---   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
--- })
---
+vim.lsp.config("gopls", {
+  capabilities = capabilities,
+  handlers = handlers,
+  on_attach = on_attach,
+  settings = require("config.lsp.servers.gopls").settings,
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_markers = { "go.work", "go.mod", ".git" }
+  -- root_dir = util.root_pattern(),
+})
+
 local cssls = require("config.lsp.servers.cssls")
 
 vim.lsp.config("cssls", {
@@ -107,7 +110,8 @@ vim.lsp.config("html", {
   handlers = handlers,
   on_attach = on_attach,
   filetypes = html.filetypes,
-  init_options = html.init_options,
+  root_markers = { "package.json" },
+  init_options = html.init_options
 })
 
 local tailwindcss = require("config.lsp.servers.tailwindcss")
@@ -118,7 +122,8 @@ vim.lsp.config("tailwindcss", {
   on_attach = on_attach,
   filetypes = tailwindcss.filetypes,
   settings = tailwindcss.settings,
-  root_dir = util.root_pattern(unpack(tailwindcss.root_dir_pattern)),
+  -- root_dir = util.root_pattern(unpack(tailwindcss.root_dir_pattern)),
+  root_markers = { "package.json" },
 })
 
 vim.lsp.enable("lua_ls")
@@ -127,6 +132,7 @@ vim.lsp.enable("vtsls")
 vim.lsp.enable("tailwindcss")
 vim.lsp.enable("html")
 vim.lsp.enable("cssls")
+vim.lsp.enable("gopls")
 
 require("mason-registry").refresh(function()
   local debug_adapters = {
